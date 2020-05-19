@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 
 """
-    opensearch.py
-    MediaWiki API Demos
-    Demo of `Opensearch` module: Search the wiki and obtain
-	results in an OpenSearch (http://www.opensearch.org) format
-    MIT License
+    Pull first 300 terms from Wikipedia article for a given term
 """
 def retrieve_definition(term):
     import requests
@@ -18,7 +14,7 @@ def retrieve_definition(term):
         "action": "query",
         "prop": "extracts",
         "exchars": "300",
-        "titles": "Dog",
+        "titles": term,
         "format": "json",
         "explaintext": 1,
         "exintro": 1,
