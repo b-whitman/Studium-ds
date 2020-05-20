@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 """
-    Pull first 300 terms from Wikipedia article for a given term
+    Pull first 300 characters from Wikipedia article for a given term
 """
 def retrieve_definition(term):
     import requests
+    import json
 
     S = requests.Session()
 
@@ -24,4 +25,13 @@ def retrieve_definition(term):
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
 
-    return DATA
+    key = list(DATA['query']['pages'].keys())[0]
+    extract = DATA['query']['pages'][key]['extract']
+
+    if extract == '...':
+        pass
+        #exceptions function goes here
+
+    return extract
+
+def open_search(term):
