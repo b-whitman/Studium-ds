@@ -5,7 +5,6 @@
 """
 def retrieve_definition(term):
     import requests
-    import json
 
     S = requests.Session()
 
@@ -28,10 +27,28 @@ def retrieve_definition(term):
     key = list(DATA['query']['pages'].keys())[0]
     extract = DATA['query']['pages'][key]['extract']
 
-    if extract == '...':
-        pass
+    if len(extract) == 3:
+        return open_search(term)
+
         #exceptions function goes here
 
-    return extract
+    else:
+        return extract
 
 def open_search(term):
+    import requests
+    S = requests.Session()
+
+    URL = "https://en.wikipedia.org/w/api.php"
+
+    PARAMS = {
+        "action": "opensearch",
+        "search": term,
+        "redirects": "resolve",
+        "format": "json"
+    }
+
+    R = S.get(url=URL, params=PARAMS)
+    DATA = R.json()
+    suggests = DATA[1]
+    return suggests
