@@ -27,34 +27,53 @@ def retrieve_definition(term):
 
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
-
     key = list(DATA['query']['pages'].keys())[0]
-    extract = DATA['query']['pages'][key]['extract']
+    try:
+        extract = DATA['query']['pages'][key]['extract']
     # this selects the extract from within the JSON object returned by the API call. Two steps are necessary because one
     # of the dictionary keys is the page ID for that term.
 
-    if len(extract) == 3:
+        if len(extract) == 3:
+            if term.isupper():
+                return retrieve_definition(term.lower())
+            elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
+                term = term[4:]
+                return retrieve_definition(term)
+                #sends term back through function minus 'the'
+            elif term[-1:] == 's':
+                term = term[:-1]
+                return retrieve_definition(term)
+                #sends terms back through function without final 's'
+            elif term[-1:] == 'e':
+                #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
+                term = term[:-1]
+                return retrieve_definition(term)
+            else:
+                return open_search(term)
+                #all of the test cases have failed, function will return suggestions instead
+
+        else:
+            return extract
+    except KeyError:
+        #sometimes instead of an empty string as an extract the API call returns a "missing" key in JSON, this accounts
+        #for that
         if term.isupper():
             return retrieve_definition(term.lower())
-        elif term.istitle():
-            return retrieve_definition(term.lower())
-        elif not term.istitle():
-            return retrieve_definition(term.title())
         elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
-            return retrieve_definition(term[4:])
-            #sends term back through function minus 'the'
-        elif term[:-1] == 's':
-            return retrieve_definition(term[0:-1])
-            #sends terms back through function without final 's'
-        elif term[:-1] == 'e':
-            #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
-            return retrieve_definition(term[0:-1])
+            term = term[4:]
+            print(type(term))
+            return retrieve_definition(term)
+            # sends term back through function minus 'the'
+        elif term[-1:] == 's':
+            term = term[:-1]
+            return retrieve_definition(term)
+            # sends terms back through function without final 's'
+        elif term[-1:] == 'e':
+            # this accounts for cases of "es" plural, the previous cycle would have removed the 's'
+            term = term[:-1]
+            return retrieve_definition(term)
         else:
             return open_search(term)
-            #all of the test cases have failed, function will return suggestions instead
-
-    else:
-        return extract
 
 
 def open_search(term):
