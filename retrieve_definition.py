@@ -3,12 +3,14 @@
 """
     Pull first 300 characters from Wikipedia article for a given term
 """
+
+
 def retrieve_definition(term):
     import requests
 
     S = requests.Session()
 
-    URL = "https://en.wikipedia.org/w/api.php"
+    URL = "https://en.wikipedia.org/w/api.php"  # this is the base API URL for Wikipedia
 
     PARAMS = {
         "action": "query",
@@ -17,25 +19,49 @@ def retrieve_definition(term):
         "titles": term,
         "format": "json",
         "explaintext": 1,
-        "exintro": 1,
         "exlimit": 1
     }
+
+    # parameters set to query for an extract of 300 characters for the given term, in JSON format. Explaintext strips out
+    # Wikipedia's special formatting. Exlimit says to only return 1 extract.
 
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
 
     key = list(DATA['query']['pages'].keys())[0]
     extract = DATA['query']['pages'][key]['extract']
+    # this selects the extract from within the JSON object returned by the API call. Two steps are necessary because one
+    # of the dictionary keys is the page ID for that term.
 
     if len(extract) == 3:
-        return open_search(term)
-
-        #exceptions function goes here
+        if term.isupper():
+            return retrieve_definition(term.lower())
+        elif term.istitle():
+            return retrieve_definition(term.lower())
+        elif not term.istitle():
+            return retrieve_definition(term.title())
+        elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
+            return retrieve_definition(term[4:])
+            #sends term back through function minus 'the'
+        elif term[:-1] == 's':
+            return retrieve_definition(term[0:-1])
+            #sends terms back through function without final 's'
+        elif term[:-1] == 'e':
+            #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
+            return retrieve_definition(term[0:-1])
+        else:
+            return open_search(term)
+            #all of the test cases have failed, function will return suggestions instead
 
     else:
         return extract
 
+
 def open_search(term):
+    """
+    function to use opensearch on Wikipedia API and return most likely related articles for a given term. opensearch
+    is a Wikimedia API feature which returns similarly-titled articles within the wiki.
+    """
     import requests
     S = requests.Session()
 
@@ -48,7 +74,12 @@ def open_search(term):
         "format": "json"
     }
 
+    # Parameters set tells API to use opensearch on the given term and return the results as a JSON object.
+    # Resolve means to return redirects as the page they point to.
+
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
     suggests = DATA[1]
     return suggests
+
+
