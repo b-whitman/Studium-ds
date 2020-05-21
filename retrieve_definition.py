@@ -27,9 +27,9 @@ def retrieve_definition(term):
 
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
-    key = list(DATA['query']['pages'].keys())[0]
+    pageid = list(DATA['query']['pages'].keys())[0]
     try:
-        extract = DATA['query']['pages'][key]['extract']
+        extract = DATA['query']['pages'][pageid]['extract']
     # this selects the extract from within the JSON object returned by the API call. Two steps are necessary because one
     # of the dictionary keys is the page ID for that term.
 
@@ -61,7 +61,6 @@ def retrieve_definition(term):
             return retrieve_definition(term.lower())
         elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
             term = term[4:]
-            print(type(term))
             return retrieve_definition(term)
             # sends term back through function minus 'the'
         elif term[-1:] == 's':
