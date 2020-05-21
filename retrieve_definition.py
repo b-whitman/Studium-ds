@@ -34,45 +34,14 @@ def retrieve_definition(term):
     # of the dictionary keys is the page ID for that term.
 
         if len(extract) == 3:
-            if term.isupper():
-                return retrieve_definition(term.lower())
-            elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
-                term = term[4:]
-                return retrieve_definition(term)
-                #sends term back through function minus 'the'
-            elif term[-1:] == 's':
-                term = term[:-1]
-                return retrieve_definition(term)
-                #sends terms back through function without final 's'
-            elif term[-1:] == 'e':
-                #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
-                term = term[:-1]
-                return retrieve_definition(term)
-            else:
-                return open_search(term)
-                #all of the test cases have failed, function will return suggestions instead
+            return text_wrangle(term)
 
         else:
             return extract
     except KeyError:
         #sometimes instead of an empty string as an extract the API call returns a "missing" key in JSON, this accounts
         #for that
-        if term.isupper():
-            return retrieve_definition(term.lower())
-        elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
-            term = term[4:]
-            return retrieve_definition(term)
-            # sends term back through function minus 'the'
-        elif term[-1:] == 's':
-            term = term[:-1]
-            return retrieve_definition(term)
-            # sends terms back through function without final 's'
-        elif term[-1:] == 'e':
-            # this accounts for cases of "es" plural, the previous cycle would have removed the 's'
-            term = term[:-1]
-            return retrieve_definition(term)
-        else:
-            return open_search(term)
+        return text_wrangle(term)
 
 
 def open_search(term):
@@ -100,4 +69,22 @@ def open_search(term):
     suggests = DATA[1]
     return suggests
 
-
+def text_wrangle(term):
+    """
+    Check text for various edge cases and re-run
+    """
+    if term.isupper():
+        return retrieve_definition(term.lower())
+    elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
+        return retrieve_definition(term[4:])
+        #sends term back through function minus 'the'
+    elif term[-1:] == 's':
+        return retrieve_definition(term[:-1])
+        #sends terms back through function without final 's'
+    elif term[-1:] == 'e':
+        #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
+        term = term[:-1]
+        return retrieve_definition(term[:-1])
+    else:
+        return open_search(term)
+        #all of the test cases have failed, function will return suggestions instead
