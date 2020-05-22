@@ -67,7 +67,7 @@ def open_search(term):
     R = S.get(url=URL, params=PARAMS)
     DATA = R.json()
     suggests = DATA[1]
-    return suggests
+    return f"Did you mean {suggests[0]}, {suggests[1]}, {suggests[2]}?"
 
 def text_wrangle(term):
     """
