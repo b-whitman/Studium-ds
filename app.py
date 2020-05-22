@@ -16,11 +16,11 @@ def home():
     return render_template('base.html', message=message)
 
 
-# Creating a serach route to access retrieve_defenition function
+# Creating a serach route to access retrieve_definition function
 @app.route('/search', methods=['GET', 'POST'])
 def wiki_search():
     """Accessing wikipedia's api with 
-    retrieve_defenition function"""
+    retrieve_definition function"""
     searchword = request.args.get('word')
     data = retrieve_definition(searchword)
     return data
