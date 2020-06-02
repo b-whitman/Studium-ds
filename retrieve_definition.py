@@ -4,9 +4,9 @@
     Pull first 300 characters from Wikipedia article for a given term
 """
 
+import requests
 
 def retrieve_definition(term):
-    import requests
 
     S = requests.Session()
 
@@ -49,7 +49,7 @@ def open_search(term):
     function to use opensearch on Wikipedia API and return most likely related articles for a given term. opensearch
     is a Wikimedia API feature which returns similarly-titled articles within the wiki.
     """
-    import requests
+    
     S = requests.Session()
 
     URL = "https://en.wikipedia.org/w/api.php"
