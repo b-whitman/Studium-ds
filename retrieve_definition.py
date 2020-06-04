@@ -75,18 +75,22 @@ def text_wrangle(term):
     """
     Check text for various edge cases and re-run
     """
+    wrangled_search = "..."
     if term.isupper():
-        return retrieve_definition(term.lower())
+        wrangled_search = retrieve_definition(term.lower())
     elif (term[0:4] == 'the ') | (term[0:4] == 'The '):
-        return retrieve_definition(term[4:])
-        # sends term back through function minus 'the'
+
+        wrangled_search = retrieve_definition(term[4:])
+        #sends term back through function minus 'the'
     elif term[-1:] == 's':
-        return retrieve_definition(term[:-1])
-        # sends terms back through function without final 's'
+        wrangled_search = retrieve_definition(term[:-1])
+        #sends terms back through function without final 's'
     elif term[-1:] == 'e':
-        # this accounts for cases of "es" plural, the previous cycle would have removed the 's'
-        term = term[:-1]
-        return retrieve_definition(term[:-1])
+        #this accounts for cases of "es" plural, the previous cycle would have removed the 's'
+        wrangled_search = retrieve_definition(term[:-1])
+    if len(wrangled_search) > 3:
+        return wrangled_search
+
     else:
         return open_search(term)
         # all of the test cases have failed, function will return suggestions instead
