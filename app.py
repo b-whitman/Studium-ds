@@ -1,5 +1,7 @@
+import calendar_heatmap
 from flask import Flask, render_template, jsonify, request, url_for
 import json
+import os
 import pandas as pd
 from retrieve_definition import retrieve_definition
 
@@ -24,6 +26,27 @@ def wiki_search():
     searchword = request.args.get('word')
     data = retrieve_definition(searchword)
     return data
+
+# Create a route to return heatmap
+@app.route('/heatmap', methods=['GET', 'POST'])
+def calender_heatmap():
+    """Returning the plotly visual in html form"""
+    month = request.args.get('month')
+    year = request.args.get('year')
+
+    # Uses the default values in function if no value is inputted
+    if month:
+        calendar_heatmap.get_viz(month, year)
+    else:
+        calendar_heatmap.get_viz()
+    
+    return render_template('heatmap.html')
+    
+
+@app.route('/delete_map')
+def delete():
+    os.remove('templates/heatmap.html')
+    return 'File deleted'
 
 
 if __name__ == '__main__':
