@@ -64,10 +64,11 @@ def open_search(term):
     # Parameters set tells API to use opensearch on the given term and return the results as a JSON object.
     # Resolve means to return redirects as the page they point to.
 
-    response = S.get(url=URL, params=params)
-    data = response.json()
-    suggests = data[1]
-    return suggests
+
+    R = S.get(url=URL, params=PARAMS)
+    DATA = R.json()
+    suggests = DATA[1]
+    return f"Did you mean {suggests[0]}, {suggests[1]}, {suggests[2]}?"
 
 
 def text_wrangle(term):
