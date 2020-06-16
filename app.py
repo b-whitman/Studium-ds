@@ -47,7 +47,6 @@ def calender_heatmap():
 @app.route('/delete_map')
 def delete():
     os.remove('templates/heatmap.html')
-    # os.remove('templates/gauge.html')
     return 'File deleted'
 
 # Create route to return gauge plot
