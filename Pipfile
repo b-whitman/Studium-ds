@@ -12,8 +12,8 @@ gunicorn = "*"
 python-dotenv = "*"
 requests = "*"
 numpy = "*"
-plotly = "*"
 cufflinks = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.7"
