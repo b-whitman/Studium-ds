@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+jupyter = "*"
+ipykernel = "*"
 
 [packages]
 flask = "*"
@@ -14,6 +16,7 @@ requests = "*"
 numpy = "*"
 cufflinks = "*"
 plotly = "*"
+inflect = "*"
 
 [requires]
 python_version = "3.7"
