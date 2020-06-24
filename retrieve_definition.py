@@ -13,6 +13,9 @@ p = inflect.engine()
 
 def retrieve_definition(term, term_wrangled=False):
 
+    if len(term) > 255:
+        return 'Sorry, that text is too long to search!'
+
     S = requests.Session()
 
     URL = "https://en.wikipedia.org/w/api.php"
