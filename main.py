@@ -6,6 +6,7 @@ import calendar_heatmap
 import os
 from retrieve_definition import retrieve_definition
 import gauge_plot
+from pydantic import BaseModel
 
 
 # Creating FastApi
@@ -36,12 +37,12 @@ async def root():
 
 
 # Creating a serach route to access retrieve_definition function
-@app.post('/search')
+@app.get('/search')
 async def wiki_search(word: str):
-        """Accessing wikipedia's api and returns
-        first 300 characters for a given term"""
-        data = retrieve_definition(word)
-        return data
+    """Accessing wikipedia's api and returns
+    first 300 characters for a given term"""
+    data = retrieve_definition(word)
+    return data
 
 
 # Create a route to return heatmap
@@ -55,11 +56,14 @@ async def calender_heatmap(request: Request, month: int, year: int):
 
 
 # Create route to delete heatmap
-@app.get('/delete_heatmap')
+@app.delete('/delete_heatmap')
 async def delete_heatmap():
     """deletes heatmap html file saved in server"""
-    os.remove('templates/heatmap.html')
-    return 'File deleted'
+    try:
+        os.remove('templates/heatmap.html')
+        return 'File deleted'
+    except BaseException:
+        return "File has already been deleted"
 
 
 # Create route to return gauge plot
@@ -71,11 +75,14 @@ async def plot_gauge(request: Request, streaks: int):
 
 
 # Create route to delete gauge plot
-@app.get('/delete_gauge')
+@app.delete('/delete_gauge')
 async def delete_gauge():
     """deletes gauge html file saved in server"""
-    os.remove('templates/gauge.html')
-    return 'File deleted'
+    try:
+        os.remove('templates/gauge.html')
+        return 'File deleted'
+    except BaseException:
+        return "File has already been deleted"
 
 
 if __name__ == '__main__':
