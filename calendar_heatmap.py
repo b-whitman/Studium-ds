@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 import numpy as np
-from datetime import datetime, date, timedelta
+from datetime import datetime
 import plotly.graph_objects as go
 import calendar
 
@@ -11,6 +11,7 @@ def get_viz_user_info(user_id):
     database_location = DATABASE_URL
     connection = sqlite3.connect(database_location)
     cursor = connection.cursor()
+
     results = cursor.execute(
         f"SELECT created_at FROM decks WHERE user_id = {user_id}")
     # gets all dates from the 'decks' table for the given user
@@ -24,6 +25,7 @@ def get_viz_user_info(user_id):
     dates_created_decks.sort()
     results = cursor.execute(
         f"SELECT session_start FROM sessions WHERE (user_id = {user_id}) AND (total_looked_at > 0)")
+
     # gets all dates from 'sessions' table where the given user logged and
     # viewed at least one card
 
@@ -32,7 +34,7 @@ def get_viz_user_info(user_id):
         timestamp = timestamp.date()
         dates_viewed_cards.append(timestamp)
     # adds each of these dates to a list
-    return dates_created_deck, dates_viewed_cards
+    return dates_created_decks, dates_viewed_cards
 
 
 def week_of_month(row):
@@ -40,29 +42,28 @@ def week_of_month(row):
     day = (row['From_1st_Monday']) + 1
     # based on index of dataframe, which counts from zero
     if day <= 7:
-        return '1st Week'
+        week = '1st Week'
     elif 7 < day <= 14:
-        return '2nd Week'
+        week = '2nd Week'
     elif 14 < day <= 21:
-        return '3rd Week'
+        week = '3rd Week'
     elif 21 < day <= 28:
-        return '4th Week'
+        week = '4th Week'
     elif 28 < day <= 35:
-        return '5th Week'
-    # this is greater than 31 to account for padded data added at top of
-    # dataframe
+        week = '5th Week'
+    # this is greater than 31 to account for padded data added at top of dataframe
     else:
-        return ''
+        week = ''
     # this prevents a month from having six weeks if the 1st of the month is late
     # in the week, instead the graph displays those days but doesn't label them
+    return week
 
 
-def get_viz(month_to_show=datetime.now().month,
-            year_to_show=datetime.now().year):
+def get_viz(month_to_show=datetime.now().month, year_to_show=datetime.now().year):
     """Function to show calendar heatmap for user interaction with the app. Takes in
-    a month to show as an integer between 1 and 12, and a year as a four-digit
-    integer between 0000 and 9999. Defaults to current month and year if
-    no date is provided."""
+  a month to show as an integer between 1 and 12, and a year as a four-digit 
+  integer between 0000 and 9999. Defaults to current month and year if
+  no date is provided."""
 
     all_dates = pd.date_range('1/15/2019', periods=120, freq='D')
     dates_created_decks = np.random.choice(all_dates, 25)
@@ -78,7 +79,7 @@ def get_viz(month_to_show=datetime.now().month,
     for d in dates_created_decks:
         if d in dates_viewed_cards:
             dates[d] = 2
-    # if a date is in both "viewed" and "created" lists, that's two events
+        # if a date is in both "viewed" and "created" lists, that's two events
         else:
             dates[d] = 1
     # if a date is only in "created", that's one event
@@ -93,14 +94,12 @@ def get_viz(month_to_show=datetime.now().month,
         # this line converts the datetime64 objects to datetime objects
         # may need to change once we are dealing with the pulled database info
         start_day = datetime(year=year, month=1, day=1)
-        # first day of visualization data is the 1st of the month the user
-        # started
+        # first day of visualization data is the 1st of the month the user started
         next_month = datetime.now().month + 1
         year = datetime.now().year
         end_day = datetime(year=year, month=next_month, day=1)
         # sets the last day of visualization data as the first of next month
-        # ensures all days of current month are included even if they haven't
-        # happened yet
+        # ensures all days of current month are included even if they haven't happened yet
         all_days = pd.Series(pd.date_range(start=start_day, end=end_day))
         # creates a dataframe of every day between each of those dates
     else:

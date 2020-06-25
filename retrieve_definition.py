@@ -14,7 +14,7 @@ p = inflect.engine()
 def retrieve_definition(term, term_wrangled=False):
 
     if len(term) > 255:
-        return 'Sorry, that text is too long to search!'
+        text = 'Sorry, that text is too long to search!'
 
     S = requests.Session()
 
@@ -41,34 +41,34 @@ def retrieve_definition(term, term_wrangled=False):
     try:
         print("Pulling extract")
         extract = data['query']['pages'][pageid]['extract']
-        print(extract)
         # this selects the extract from within the JSON object returned by the API call. Two steps are necessary
         # because one of the dictionary keys is the page ID for that term.
 
         # if the length of extract is 3, that indicates extract is '...',
         # which is what the API usually returns if it doesn't find a page
         if len(extract) > 3:
-            return extract
+            text = extract
 
-        elif (len(extract) == 3 and term_wrangled == False):
+        elif len(extract) == 3 and term_wrangled is False:
             wrangled_term = text_wrangle(term)
             print("Wrangled_term: ", wrangled_term)
             wrangled_extract = retrieve_definition(wrangled_term,
-                                                   term_wrangled=1)
+                                                   term_wrangled=True)
             print(len(wrangled_extract))
             if len(wrangled_extract) > 3:
-                return wrangled_extract
+                text = wrangled_extract
 
             else:
-                return open_search(term)
+                text = open_search(term)
 
         else:
-            return open_search(term)
+            text = open_search(term)
 
     except KeyError:
         # sometimes instead of an empty string as an extract the API call returns a "missing" key in JSON, this accounts
         # for that
-        return open_search(term)
+        text = open_search(term)
+    return text
 
 
 def open_search(term):
