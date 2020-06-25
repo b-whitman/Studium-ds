@@ -35,6 +35,7 @@ def retrieve_definition(term, term_wrangled=False):
 
     print("Searching API for: ", term)
     response = S.get(url=URL, params=params)
+    S.close()
     data = response.json()
     pageid = list(data['query']['pages'].keys())[0]
     try:
@@ -105,10 +106,9 @@ def text_wrangle(term):
     """
     Check text for various edge cases and remove
     """
-    if term.isupper():
-        # Makes term lowercase
-        term = term.lower()
-        print("Lowercase search: ", term)
+    # Makes term lowercase
+    term = term.lower()
+    print("Lowercase search: ", term)
 
     if term[0:4] == 'the ':
         # Strips 'the' and 'The' from term
