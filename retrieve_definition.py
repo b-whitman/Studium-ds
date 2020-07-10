@@ -5,20 +5,9 @@
 """
 
 import requests
-import inflect
-
-# Start engine for text_wrangle() singularization
-p = inflect.engine()
 
 
-def retrieve_definition(term, term_wrangled=False):
-
-    if len(term) > 255:
-        text = 'Sorry, that text is too long to search!'
-
-    S = requests.Session()
-
-    URL = "https://en.wikipedia.org/w/api.php"
+def get_API_params(term):
     params = {
         "action": "query",
         "prop": "extracts",
@@ -33,10 +22,56 @@ def retrieve_definition(term, term_wrangled=False):
     # out Wikipedia's special formatting. Exlimit says to only return 1
     # extract.
 
+    return params
+
+def get_opensearch_params(term):
+    params = {
+        "action": "opensearch",
+        "search": term,
+        "redirects": "resolve",
+        "format": "json"
+    }
+
+    # Parameters set tells API to use opensearch on the given term and return the results as a JSON object.
+    # Resolve means to return redirects as the page they point to.
+
+    return params
+
+def get_json_extract(term):
+    S = requests.Session()
+
+    URL = "https://en.wikipedia.org/w/api.php"
+
+    params = get_API_params(term)
+
     print("Searching API for: ", term)
     response = S.get(url=URL, params=params)
     S.close()
     data = response.json()
+    return data
+
+def get_json_opensearch(term):
+
+    S = requests.Session()
+
+    URL = "https://en.wikipedia.org/w/api.php"
+
+    params = get_opensearch_params(term)
+
+    R = S.get(url=URL, params=params)
+    DATA = R.json()
+    suggests = DATA[1]
+
+    S.close()
+    return suggests
+
+def retrieve_definition(term, term_wrangled=False):
+
+    if len(term) > 255:
+        text = 'Sorry, that text is too long to search!'
+
+    data = get_json_extract(term)
+
     pageid = list(data['query']['pages'].keys())[0]
     try:
         print("Pulling extract")
@@ -76,24 +111,8 @@ def open_search(term):
     function to use opensearch on Wikipedia API and return most likely related articles for a given term. opensearch
     is a Wikimedia API feature which returns similarly-titled articles within the wiki.
     """
+    suggests = get_json_opensearch(term)
 
-    S = requests.Session()
-
-    URL = "https://en.wikipedia.org/w/api.php"
-
-    params = {
-        "action": "opensearch",
-        "search": term,
-        "redirects": "resolve",
-        "format": "json"
-    }
-
-    # Parameters set tells API to use opensearch on the given term and return the results as a JSON object.
-    # Resolve means to return redirects as the page they point to.
-
-    R = S.get(url=URL, params=params)
-    DATA = R.json()
-    suggests = DATA[1]
     try:
         return f"Did you mean {suggests[0]}, {suggests[1]}, {suggests[2]}?"
 
@@ -106,6 +125,11 @@ def text_wrangle(term):
     """
     Check text for various edge cases and remove
     """
+    import inflect
+
+    # Start engine for text_wrangle() singularization
+    p = inflect.engine()
+
     # Makes term lowercase
     term = term.lower()
     print("Lowercase search: ", term)
