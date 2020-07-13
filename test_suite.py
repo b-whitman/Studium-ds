@@ -1,7 +1,7 @@
 import unittest
 from retrieve_definition import retrieve_definition, text_wrangle, open_search, get_API_params, \
     get_opensearch_params, get_json_opensearch, get_json_extract
-from autogenerate_decks import autogenerate, batch_search, get_article_size
+from autogenerate_decks import autogenerate, batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
 from unittest.mock import patch
 
 
@@ -19,9 +19,15 @@ class TestAutogeneration(unittest.TestCase):
     def test_get_article_size(self):
         self.assertNotIn('Hans Stubb', get_article_size("Photosynthesis|Geology|Hans Stubb"))
 
+    def test_get_search_string(self):
+        self.assertEqual(get_search_string(["Tree", "Bush", "Cherry", "Dog"]), 'Tree|Bush|Cherry|Dog')
+        self.assertIs(get_search_string(["Tree", "Bush", "Cherry", "Dog"]), str)
 
-    def test_autogenerate(self):
-        self.assertIs(type(autogenerate("Trail_Blazer_(train)")), dict)
+    def test_get_params_autogen(self):
+        self.assertIs(type(get_params_autogen('Dog')), dict)
+
+    def test_get_params_size(self):
+        self.assertIs(type(get_params_size('Dog')), dict)
 
 
 class TestWikiAPI(unittest.TestCase):
