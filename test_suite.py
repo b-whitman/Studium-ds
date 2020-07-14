@@ -21,7 +21,7 @@ class TestAutogeneration(unittest.TestCase):
 
     def test_get_search_string(self):
         self.assertEqual(get_search_string(["Tree", "Bush", "Cherry", "Dog"]), 'Tree|Bush|Cherry|Dog')
-        self.assertIs(get_search_string(["Tree", "Bush", "Cherry", "Dog"]), str)
+        self.assertIs(type(get_search_string(["Tree", "Bush", "Cherry", "Dog"])), str)
 
     def test_get_params_autogen(self):
         self.assertIs(type(get_params_autogen('Dog')), dict)
