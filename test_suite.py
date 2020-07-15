@@ -1,8 +1,7 @@
 import unittest
-from retrieve_definition import retrieve_definition, text_wrangle, open_search, get_API_params, \
-    get_opensearch_params, get_json_opensearch, get_json_extract
-from autogenerate_decks import autogenerate, batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
-from unittest.mock import patch
+from retrieve_definition import text_wrangle, open_search, get_API_params, get_opensearch_params
+from autogenerate_decks import batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
+
 
 
 class TestAutogeneration(unittest.TestCase):

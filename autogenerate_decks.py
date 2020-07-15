@@ -3,6 +3,7 @@ from retrieve_definition import retrieve_definition, open_search, text_wrangle
 
 
 def get_params_autogen(term):
+    """Sets the parameters for the API call for the initial user-entered term"""
     params = {
         "action": "parse",
         "prop": "links",
@@ -15,6 +16,7 @@ def get_params_autogen(term):
 
 
 def get_params_size(search_string):
+    """Set parameters for API call that gets the article sizes for everything linked to the initial term article"""
     params = {
         "action": "query",
         "prop": "revisions",
@@ -27,6 +29,7 @@ def get_params_size(search_string):
 
 
 def autogenerate(term):
+    """Function to generate a set of extracts from a single user-entered term using the Wikipedia API"""
     S = requests.Session()
 
     URL = "https://en.wikipedia.org/w/api.php"  # this is the base API URL for Wikipedia
@@ -50,6 +53,7 @@ def autogenerate(term):
             count += 1
     if count < 2:
         return open_search(term)
+    # if the term entered doesn't return any articles, suggest a different term
     articles = batch_search(article_links)
     cards = {}
     articles = [item for elem in articles for item in elem]
@@ -63,6 +67,7 @@ def autogenerate(term):
 
 
 def batch_search(terms_list, batch_size=50):
+    """Function to break longer sets of related terms into groups of 50, the max allowed by the Wikipedia API call"""
     large_articles = []
     if len(terms_list) > batch_size:
         while len(terms_list) > batch_size:
@@ -77,6 +82,7 @@ def batch_search(terms_list, batch_size=50):
 
 
 def get_article_size(search_string):
+    """Function to get the size of each article connected to the initial search term"""
     S = requests.Session()
 
     URL = "https://en.wikipedia.org/w/api.php"  # this is the base API URL for Wikipedia
@@ -87,21 +93,22 @@ def get_article_size(search_string):
     articles = []
     for page_id in page_ids:
         if page_id != "-1":
-            #a -1 page_id means that the page does not exist
+            # a -1 page_id means that the page does not exist
             b_size = data["query"]["pages"][page_id]["revisions"][0]
             b_size = b_size["size"]
             if b_size > 50000:
-                #article size is measured in bytes, this filters for only articles larger than 50k bytes
-                #using article size as a rough approximation of whether a topic/title is important enough to have a card
+                # article size is measured in bytes, this filters for only articles larger than 50k bytes using
+                # article size as a rough approximation of whether a topic/title is important enough to have a card
                 articles.append(data["query"]["pages"][page_id]["title"])
     S.close()
     return articles
 
 
 def get_search_string(terms_list, batch_size=50):
+    """Function to create a search string from the list of related terms"""
     search_string = ""
     for item in terms_list[:batch_size]:
         search_string = search_string + "|" + item
     search_string = search_string[1:]
-        # creates string of titles separated by pipeline character in order to send through API
+    # creates string of titles separated by pipeline character in order to send through API
     return search_string

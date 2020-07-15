@@ -24,6 +24,7 @@ def get_API_params(term):
 
     return params
 
+
 def get_opensearch_params(term):
     params = {
         "action": "opensearch",
@@ -36,6 +37,7 @@ def get_opensearch_params(term):
     # Resolve means to return redirects as the page they point to.
 
     return params
+
 
 def get_json_extract(term):
     S = requests.Session()
@@ -50,8 +52,8 @@ def get_json_extract(term):
     data = response.json()
     return data
 
-def get_json_opensearch(term):
 
+def get_json_opensearch(term):
     S = requests.Session()
 
     URL = "https://en.wikipedia.org/w/api.php"
@@ -65,8 +67,8 @@ def get_json_opensearch(term):
     S.close()
     return suggests
 
-def retrieve_definition(term, term_wrangled=False):
 
+def retrieve_definition(term, term_wrangled=False):
     if len(term) > 255:
         text = 'Sorry, that text is too long to search!'
 
