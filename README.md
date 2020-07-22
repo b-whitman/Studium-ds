@@ -1,14 +1,11 @@
 
 
-🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
 
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
-# 1️⃣ Studium
+# Studium
 
 You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com/).
 
-## 5️⃣ Contributors
+## Contributors
 
 |                                       [Amer Mahyoub](https://github.com/ameralhomdy)                                        |                                       [Ben Witman](https://github.com/b-whitman)                                        |                                       [Cai Nowicki](https://github.com/dunkelweizen)                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
@@ -18,37 +15,34 @@ You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com
 
 
 
-🚫 5️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
-
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ec33ec3ad4fd03a44fb0/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/pt-synaps-ds/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ec33ec3ad4fd03a44fb0/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/pt-synaps-ds/test_coverage)
 
-🚫 more info on using badges [here](https://github.com/badges/shields)
 
 ## Project Overview
 
 
-1️⃣ [Trello Board](https://trello.com/b/TIZq1yva/labspt11-studium)
+ [Trello Board](https://trello.com/b/TIZq1yva/labspt11-studium)
 
-1️⃣ [Product Canvas](https://www.notion.so/244664dd54b047b5803cbd5c735dfb31?v=766ef77c015042b3b7fbec64394693e9)
+ [Product Canvas](https://www.notion.so/244664dd54b047b5803cbd5c735dfb31?v=766ef77c015042b3b7fbec64394693e9)
 
 A flashcard application for students studying life sciences. It's Quizlet meets Anki 
 
-🚫  delete if front end is not applicable to your project
+
 
 1️⃣ [Deployed Front End](🚫add link to deployed app here)
 
 ### Tech Stack
+- Python
+- Wikipedia access through MediaWiki API
+- Heroku (both front-end and custom API)
+- FastAPI
 
-🚫 List all of the languages, frameworks, services, etc used here.
 
-### 2️⃣ Predictions
+###  Predictions
 
 🚫 Describe your models here
+No predictive models yet!
 
 ### 2️⃣ Explanatory Variables
 
@@ -59,7 +53,6 @@ A flashcard application for students studying life sciences. It's Quizlet meets 
 -   Explanatory Variable 5
 
 ### Data Sources
-🚫  Add to or delete souce links as needed for your project
 
 
 -   [Source 1] (🚫add link to python notebook here)
