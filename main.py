@@ -1,12 +1,15 @@
+from autogenerate_decks import autogenerate
 from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+
 import calendar_heatmap
 import os
 from retrieve_definition import retrieve_definition
 import gauge_plot
-from pydantic import BaseModel
 
 
 # Creating FastApi
@@ -83,6 +86,15 @@ async def delete_gauge():
         return 'File deleted'
     except BaseException:
         return "File has already been deleted"
+
+
+@app.get('/autogenerate_deck')
+async def autogenerate_search(word: str):
+    """Function to generate a set of extracts from a 
+    single user-entered term using the Wikipedia API"""
+    data = autogenerate(word)
+    data_json = jsonable_encoder(data)
+    return data_json
 
 
 if __name__ == '__main__':
