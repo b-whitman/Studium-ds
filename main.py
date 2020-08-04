@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 import calendar_heatmap
+import json
 import os
 from retrieve_definition import retrieve_definition
 import gauge_plot
@@ -45,7 +46,12 @@ async def wiki_search(word: str):
     """Accessing wikipedia's api and returns
     first 300 characters for a given term"""
     data = retrieve_definition(word)
-    return data
+    if isinstance(data, str):
+        json = {"msg": data}
+        data_json = jsonable_encoder(json)
+        return data_json
+    else:
+        return data
 
 
 # Create a route to return heatmap
