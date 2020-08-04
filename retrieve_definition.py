@@ -11,7 +11,7 @@ def get_API_params(term):
     params = {
         "action": "query",
         "prop": "extracts",
-        "exchars": "300",
+        "exchars": "190",
         "titles": term,
         "format": "json",
         "explaintext": 1,
