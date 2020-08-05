@@ -38,7 +38,7 @@ templates = Jinja2Templates(directory="templates")
 # A Pydantic model
 class User(BaseModel):
     card_id : int
-    isStarred : bool
+    isStarred : int
     comfortLevel : int
 
 
@@ -118,12 +118,12 @@ async def autogenerate_search(word: str):
 
 
 @app.post('/leitner')
-async def leitner_dates(user: List[User]):
+async def leitner_system(user: List[User]):
     """Function to analyze card-by-card user data after a study session
     and apply leitner system spaced repetition to it """
     df = pd.DataFrame(user)
-    df1 = df.apply(leitner_dates, axis=1)
-    data_json = df1.to_json(orient='records', indent=2)
+    df_modified = df.apply(leitner_dates, axis=1)
+    data_json = df_modified.to_json(orient='records')
     return data_json
 
 
