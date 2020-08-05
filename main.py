@@ -122,8 +122,8 @@ async def leitner_dates(user: List[User]):
     """Function to analyze card-by-card user data after a study session
     and apply leitner system spaced repetition to it """
     df = pd.DataFrame(user)
-    df_ = df.apply(leitner_dates, axis=1)
-    data_json = df1.to_json(orient='records', inddent=2)
+    df1 = df.apply(leitner_dates, axis=1)
+    data_json = df1.to_json(orient='records', indent=2)
     return data_json
 
 
