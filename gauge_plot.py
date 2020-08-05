@@ -28,4 +28,4 @@ def gauge(x):
         font={
             'color': "#222851",
             'family': "Arial"})
-    return fig.write_html('templates/gauge.html')
+    return fig.write_image("templates/gauge.svg")
