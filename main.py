@@ -123,7 +123,7 @@ async def json_to_pd(user: List[User]):
     and apply leitner system spaced repetition to it """
     df = pd.DataFrame(user)
     df_ = df.apply(leitner_dates, axis=1)
-    data_json = df1.to_json(orient='index')
+    data_json = df1.to_json(orient='records', inddent=2)
     return data_json
 
 
