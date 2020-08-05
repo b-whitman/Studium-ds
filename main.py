@@ -118,7 +118,7 @@ async def autogenerate_search(word: str):
 
 
 @app.post('/leitner')
-async def json_to_pd(user: List[User]):
+async def leitner_dates(user: List[User]):
     """Function to analyze card-by-card user data after a study session
     and apply leitner system spaced repetition to it """
     df = pd.DataFrame(user)
