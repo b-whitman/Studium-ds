@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime as dt
 from datetime import timedelta
 
+
 def leitner_dates(row):
     '''
     Use with pandas DataFrame.apply() method to analyze card-by-card user 
@@ -11,23 +12,24 @@ def leitner_dates(row):
     comfort level is less than 5, comfort level is raised by 1. In all
     cases next_due is then updated according to comfort level.
     '''
-    if (row['starred'] == 0) & (row['comfort_level'] < 5):
-        row['comfort_level'] += 1
+    if (row['isStarred'] == 0) & (row['comfortLevel'] < 5):
+        row['comfortLevel'] += 1
         row = update_next_due(row)
         
-    elif (row['starred'] == 0) & (row['comfort_level'] == 5):
+    elif (row['isStarred'] == 0) & (row['comfortLevel'] == 5):
         row = update_next_due(row)
         
     else:
-        row['comfort_level'] = 1
+        row['comfortLevel'] = 1
         row = update_next_due(row)
     
     return row
+
 
 def update_next_due(row):
     
     comfort_dict = {1 : 0, 2 : 2, 3 : 4, 4 : 9, 5 : 14}
     
-    next_due = dt.now() + timedelta(days=comfort_dict[row['comfort_level']])
-    row['next_due'] = next_due.strftime('%m-%d-%Y, %H:%M')
+    next_due = dt.now() + timedelta(days=comfort_dict[row['comfortLevel']])
+    row['nextDue'] = next_due.strftime('%m-%d-%Y, %H:%M')
     return row
