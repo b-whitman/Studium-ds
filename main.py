@@ -123,7 +123,7 @@ async def leitner_system(user: List[Card]):
     and apply leitner system spaced repetition to it """
     df = pd.DataFrame([dict(card) for card in user])
     df_modified = df.apply(leitner_dates, axis=1)
-    data_json = df_modified.to_json(orient='records')
+    data_json = df_modified.to_json(orient='records', indent=2)
     return Response(data_json)
 
 
