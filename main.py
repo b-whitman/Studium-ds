@@ -3,7 +3,7 @@ from autogenerate_decks import autogenerate
 from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
@@ -124,7 +124,7 @@ async def leitner_system(user: List[Card]):
     df = pd.DataFrame([dict(card) for card in user])
     df_modified = df.apply(leitner_dates, axis=1)
     data_json = df_modified.to_json(orient='records')
-    return data_json
+    return Response(data_json)
 
 
 if __name__ == '__main__':
