@@ -91,9 +91,10 @@ async def delete_heatmap():
 # Create route to return gauge plot
 @app.post('/gauge')
 async def plot_gauge(request: Request, streaks: int):
-    """Return the streaks gauge plot in SVG format"""
-    gauge_plot.gauge(streaks)
-    return templates.TemplateResponse('gauge.svg', {"request": request})
+    """Return the streaks gauge plot in encoded base64 string"""
+    img_bytes = gauge_plot.gauge(streaks)
+    # return templates.TemplateResponse('gauge.png', {"request": request})
+    return img_bytes
 
 
 # Create route to delete gauge plot
