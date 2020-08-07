@@ -1,3 +1,4 @@
+import base64
 import plotly.graph_objects as go
 
 
@@ -24,10 +25,13 @@ def gauge(x):
                 'thickness': 1,
                 'value': x}}))
     fig.update_layout(
-        paper_bgcolor="lavender",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor='rgba(0,0,0,0)',
         font={
             'color': "#222851",
             'family': "Arial"})
     # return fig.write_image("templates/gauge.png")
-    img_bytes = fig.to_image(format="png")
-    return img_bytes[:20]
+    plot = fig.write_image("gauge.png")
+    with open("gauge.png", "rb") as imageFile:
+        str = base64.b64encode(imageFile.read())
+        return str
