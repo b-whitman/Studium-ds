@@ -28,4 +28,6 @@ def gauge(x):
         font={
             'color': "#222851",
             'family': "Arial"})
-    return fig.write_image("templates/gauge.svg")
+    # return fig.write_image("templates/gauge.png")
+    img_bytes = fig.to_image(format="png")
+    return img_bytes[:20]
