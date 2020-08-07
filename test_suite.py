@@ -1,5 +1,5 @@
 import unittest
-from retrieve_definition import text_wrangle, open_search, get_API_params, get_opensearch_params
+from retrieve_definition import text_wrangle, open_search, get_API_params, get_opensearch_params, retrieve_definition
 from autogenerate_decks import batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
 from leitner import leitner_dates
 import pandas as pd
@@ -53,7 +53,7 @@ class TestWikiAPI(unittest.TestCase):
         self.assertIs(type(open_search('Dog')), str)
 
     def test_get_API_params(self):
-        self.assertEqual(get_API_params('Cat'), {'action': 'query', 'prop': 'extracts', 'exchars': '300',
+        self.assertEqual(get_API_params('Cat'), {'action': 'query', 'prop': 'extracts', 'exchars': '190',
                                                  'titles': 'Cat', 'format': 'json', 'explaintext': 1, 'exlimit': 1})
         self.assertIs(type(get_API_params('Cat')), dict)
 
@@ -62,31 +62,32 @@ class TestWikiAPI(unittest.TestCase):
                                                         'format': 'json'})
         self.assertIs(type(get_opensearch_params('Cat')), dict)
 
+    def test_retrieve_definition(self):
+        self.assertIs(type(retrieve_definition('Cat')), str)
 
 class TestLeitner(unittest.TestCase):
 
     def test_leitner_dates(self):
         test_matrix = [(0, 0, 3, ''),
-                        (1, 0, 3, ''),
-                        (2, 1, 2, ''),
-                        (3, 1, 5, ''),
-                        (4, 0, 5, '')]
-        
-        test_df = pd.DataFrame(test_matrix, 
-            columns=['card_id', 
-                    'starred', 
-                    'comfort_level', 
-                    'next_due'])
+                       (1, 0, 3, ''),
+                       (2, 1, 2, ''),
+                       (3, 1, 5, ''),
+                       (4, 0, 5, '')]
+
+        test_df = pd.DataFrame(test_matrix,
+                               columns=['card_id',
+                                        'isStarred',
+                                        'comfortLevel',
+                                        'nextDue'])
 
         self.df = test_df.apply(leitner_dates, axis=1)
 
         # Expected values for comfort_level after test_df is run through
         # leitner
-        comfort_level_series = pd.Series(data=[4,4,1,1,5], name='comfort_level')
-        pd.testing.assert_series_equal(self.df['comfort_level'], 
-                        comfort_level_series)
-        self.assertIs(type(self.df['next_due'][0]), str)
-
+        comfort_level_series = pd.Series(data=[4, 4, 1, 1, 5], name='comfortLevel')
+        pd.testing.assert_series_equal(self.df['comfortLevel'],
+                                       comfort_level_series)
+        self.assertIs(type(self.df['nextDue'][0]), str)
 
 
 if __name__ == '__main__':
