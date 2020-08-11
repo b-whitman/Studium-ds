@@ -70,17 +70,50 @@ def daily_cards_min_comparison(df):
     s = f"{difference}% {arrow}"
     return s, color_code
 
+def weekly_per_min_comparison(df):
+    today = datetime.date.today()
+    this_week_start = today - timedelta(days=7)
+    last_week_start = today - timedelta(days=14)
+    week_per_min = []
+    lastweek_per_min = []
+    for row in df:
+        if row['session_start'].date() >= this_week_start:
+            per_min = get_cards_per_min(row)
+            week_per_min.append(per_min)
+        if last_week_start <= row['session_start'].date() < this_week_start:
+            per_min = get_cards_per_min(row)
+            lastweek_per_min.append(per_min)
+    if len(week_per_min) > 0 and len(lastweek_per_min) > 0:
+        week_average = sum(week_per_min) / len(week_per_min)
+        lastweek_average = sum(lastweek_per_min) / len(lastweek_per_min)
+    elif len(week_per_min) == 0:
+        week_average = 0
+    elif len(lastweek_per_min) == 0:
+        lastweek_average = 0
+    if week_average > lastweek_average:
+        color_code = "09B109"
+        arrow = u"\u2191"
+    elif week_average < lastweek_average:
+        color_code = "CE2929"
+        arrow = u"\u2193"
+    else:
+        color_code = "000000"
+        arrow = u"\u003D"
+    difference = (week_average - lastweek_average) / lastweek_average * 100
+    s = f"{difference}% {arrow}"
+    return s, color_code
+
 def monthly_per_min_comparison(df):
-    month = datetime.datetime.now().month
-    last_month = month - timedelta(month=1)
-    year = datetime.datetime.now().year
+    today = datetime.date.today()
+    this_month_start = today - timedelta(days=30)
+    last_month_start = today - timedelta(days=60)
     month_per_min = []
     lastmonth_per_min = []
     for row in df:
-        if row['session_start'].date().month == month and row['session_start'].date().year == year:
+        if row['session_start'].date() >= this_month_start:
             per_min = get_cards_per_min(row)
             month_per_min.append(per_min)
-        if row['session_start'].date().month == last_month and row['session_start'].date().year == year:
+        if last_month_start <= row['session_start'].date() < this_month_start:
             per_min = get_cards_per_min(row)
             lastmonth_per_min.append(per_min)
     if len(month_per_min) > 0 and len(lastmonth_per_min) > 0:
