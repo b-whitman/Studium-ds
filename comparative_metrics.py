@@ -1,11 +1,11 @@
-#attempting to create measurements of comparative metrics
-#for daily show comparison of today to previous day, weekly for previous week, and monthly for previous month
-#will need to recalculate all the stats each time to compare
-#then return either a positive or negative integer, the appropriate arrow, and a hex code for color
-#up arrow = u"\u2191"
-#down arrow = u"\u2193"
-#green = 09B109
-#red = CE2929
+# attempting to create measurements of comparative metrics
+# for daily show comparison of today to previous day, weekly for previous week, and monthly for previous month
+# will need to recalculate all the stats each time to compare
+# then return either a positive or negative integer, the appropriate arrow, and a hex code for color
+# up arrow = u"\u2191"
+# down arrow = u"\u2193"
+# green = 09B109
+# red = CE2929
 
 import pandas as pd
 import datetime
@@ -13,37 +13,47 @@ from datetime import timedelta
 import numpy as np
 
 ##replace this code with actual access to user data
-test_data = pd.read_csv('https://raw.githubusercontent.com/Lambda-School-Labs/Studium-ds/viz-session-quality/test_data/mean_cards_test.csv')
+test_data = pd.read_csv(
+    'https://raw.githubusercontent.com/Lambda-School-Labs/Studium-ds/viz-session-quality/test_data/mean_cards_test.csv')
 
-def get_session_length(df):
+
+def get_session_length(row):
     ''' Calculate length of session in seconds'''
-    df['session_start'] = pd.to_datetime(df['session_start'])
-    df['session_end'] = pd.to_datetime(df['session_end'])
-    time_deltas = df['session_end'] - df['session_start']
-    session_length = []
-    for d in time_deltas:
-        session_length.append(d.total_seconds())
+    row['session_start'] = pd.to_datetime(row['session_start'])
+    row['session_end'] = pd.to_datetime(row['session_end'])
+    time_delta = row['session_end'] - row['session_start']
+    session_length = time_delta.total_seconds()
     return session_length
 
-def get_start_hour(df):
-    '''Isolate start hour from datetime object'''
-    start_hour = []
-    for t in df['session_start']:
-        start_hour.append(t.hour)
-    return start_hour
 
-
-def get_cards_per_min(df):
+def get_cards_per_min(row):
     '''Calculate cards viewed per minute'''
-    cards_per_min = (df['total_looked_at'] / df['session_length']) * 60
+    row['session_length'] = get_session_length(row)
+    cards_per_min = (row['total_looked_at'] / row['session_length']) * 60
     return cards_per_min
 
+
+def convert_to_datetime(df):
+    df['session_start'] = pd.to_datetime(df['session_start'], unit='s')
+    df['session_end'] = pd.to_datetime(df['session_end'], unit='s')
+    return df
+
+
+def convert_to_datetime_test_data(df):
+    df['session_start'] = pd.to_datetime(df['session_start'])
+    df['session_end'] = pd.to_datetime(df['session_end'])
+    return df
+
+
 def daily_cards_min_comparison(df):
+    df = convert_to_datetime_test_data(df)
+    # IMPORTANT!
+    # FIX THIS LINE BEFORE SENDING TO HEROKU!
     today = datetime.date.today()
     yesterday = today - timedelta(days=1)
     todays_per_min = []
     yesterday_per_min = []
-    for row in df:
+    for index, row in df.iterrows():
         if row['session_start'].date() == today:
             per_min = get_cards_per_min(row)
             todays_per_min.append(per_min)
@@ -66,17 +76,20 @@ def daily_cards_min_comparison(df):
     else:
         color_code = "000000"
         arrow = u"\u003D"
-    difference = (today_average - yesterday_average) / yesterday_average * 100
-    s = f"{difference}% {arrow}"
+    difference = abs((today_average - yesterday_average) / yesterday_average * 100)
+    s = f"{difference:.2f}% {arrow}"
     return s, color_code
 
+
 def weekly_per_min_comparison(df):
+    df = convert_to_datetime_test_data(df)
+    #FIX THIS LINE
     today = datetime.date.today()
     this_week_start = today - timedelta(days=7)
     last_week_start = today - timedelta(days=14)
     week_per_min = []
     lastweek_per_min = []
-    for row in df:
+    for index, row in df.iterrows():
         if row['session_start'].date() >= this_week_start:
             per_min = get_cards_per_min(row)
             week_per_min.append(per_min)
@@ -99,17 +112,20 @@ def weekly_per_min_comparison(df):
     else:
         color_code = "000000"
         arrow = u"\u003D"
-    difference = (week_average - lastweek_average) / lastweek_average * 100
-    s = f"{difference}% {arrow}"
+    difference = abs((week_average - lastweek_average) / lastweek_average * 100)
+    s = f"{difference:.2f}% {arrow}"
     return s, color_code
 
+
 def monthly_per_min_comparison(df):
+    df = convert_to_datetime_test_data(df)
+    #FIX THIS LINE
     today = datetime.date.today()
     this_month_start = today - timedelta(days=30)
     last_month_start = today - timedelta(days=60)
     month_per_min = []
     lastmonth_per_min = []
-    for row in df:
+    for index, row in df.iterrows():
         if row['session_start'].date() >= this_month_start:
             per_min = get_cards_per_min(row)
             month_per_min.append(per_min)
@@ -132,6 +148,6 @@ def monthly_per_min_comparison(df):
     else:
         color_code = "000000"
         arrow = u"\u003D"
-    difference = (month_average - lastmonth_average) / lastmonth_average * 100
-    s = f"{difference}% {arrow}"
+    difference = abs((month_average - lastmonth_average) / lastmonth_average * 100)
+    s = f"{difference:.2f}% {arrow}"
     return s, color_code
