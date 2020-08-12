@@ -36,7 +36,7 @@ templates = Jinja2Templates(directory="templates")
 
 # A Pydantic model to parse through JSON data
 class Card(BaseModel):
-    card_id : int
+    card_id : str
     isStarred : bool
     comfortLevel : int
 
