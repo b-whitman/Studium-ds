@@ -6,7 +6,7 @@ from comparative_metrics import get_session_length, get_cards_per_min, convert_t
         daily_cards_min_comparison, weekly_per_min_comparison, monthly_per_min_comparison, best_session_daily, \
         best_session_monthly, best_session_weekly
 import pandas as pd
-
+import numpy as np
 
 
 class TestComparativeMetrics(unittest.TestCase):
@@ -141,18 +141,18 @@ class TestLeitner(unittest.TestCase):
 
         test_df = pd.DataFrame(test_matrix,
                                columns=['card_id',
-                                        'isStarred',
-                                        'comfortLevel',
-                                        'nextDue'])
+                                        'is_starred',
+                                        'comfort_level',
+                                        'next_due'])
 
         self.df = test_df.apply(leitner_dates, axis=1)
 
         # Expected values for comfort_level after test_df is run through
         # leitner
-        comfort_level_series = pd.Series(data=[4, 4, 1, 1, 5], name='comfortLevel')
-        pd.testing.assert_series_equal(self.df['comfortLevel'],
+        comfort_level_series = pd.Series(data=[4, 4, 1, 1, 5], name='comfort_level')
+        pd.testing.assert_series_equal(self.df['comfort_level'],
                                        comfort_level_series)
-        self.assertIs(type(self.df['nextDue'][0]), str)
+        self.assertIs(type(self.df['next_due'][0]), str)
 
 
 if __name__ == '__main__':
