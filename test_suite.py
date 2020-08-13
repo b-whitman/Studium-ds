@@ -2,7 +2,73 @@ import unittest
 from retrieve_definition import text_wrangle, open_search, get_API_params, get_opensearch_params, retrieve_definition
 from autogenerate_decks import batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
 from leitner import leitner_dates
+from comparative_metrics import get_session_length, get_cards_per_min, convert_to_datetime, best_session_length, \
+        daily_cards_min_comparison, weekly_per_min_comparison, monthly_per_min_comparison, best_session_daily, \
+        best_session_monthly, best_session_weekly
 import pandas as pd
+
+
+
+class TestComparativeMetrics(unittest.TestCase):
+    def setUp(self):
+        self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
+                                      columns=['id', 'total_looked_at', 'session_start', 'session_end'])
+        self.test_df_2 = convert_to_datetime(self.test_df_1)
+        self.test_df_3 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
+                                      columns=['id', 'total_looked_at', 'session_start', 'session_end']))
+
+    def test_convert_to_datetime(self):
+        self.assertEqual(len(self.test_df_1), len(convert_to_datetime(self.test_df_1)))
+        self.assertEqual(len(self.test_df_2), len(convert_to_datetime(self.test_df_1)))
+        pd.testing.assert_frame_equal(self.test_df_2, convert_to_datetime(self.test_df_1))
+
+    def test_get_session_length(self):
+        self.assertIs(type(get_session_length(self.test_df_2.iloc[0])), float)
+        self.assertEqual(get_session_length(self.test_df_2.iloc[0]), 600.0)
+
+    def test_get_cards_per_min(self):
+        self.assertIs(type(get_cards_per_min(self.test_df_2.iloc[0])), np.float64)
+        self.assertEqual(get_cards_per_min(self.test_df_2.iloc[0]), 4.0)
+
+    def test_best_session_length(self):
+        self.assertIs(type(best_session_length(self.test_df_2)), np.float64)
+        self.assertEqual(best_session_length(self.test_df_2), 10.0)
+
+    def test_daily_cards_min_comparison(self):
+        self.assertEqual(len(daily_cards_min_comparison(self.test_df_2)), 3)
+        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[0]), str)
+        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[1]), str)
+        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[2]), int)
+
+    def test_weekly_per_min_comparison(self):
+        self.assertEqual(len(weekly_per_min_comparison(self.test_df_2)), 3)
+        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[0]), str)
+        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[1]), str)
+        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[2]), int)
+
+    def test_monthly_per_min_comparison(self):
+        self.assertEqual(len(monthly_per_min_comparison(self.test_df_2)), 3)
+        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[0]), str)
+        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[1]), str)
+        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[2]), int)
+
+    def test_best_session_daily(self):
+        self.assertEqual(len(best_session_daily(self.test_df_2)), 3)
+        self.assertIs(type(best_session_daily(self.test_df_2)[0]), int)
+        self.assertIs(type(best_session_daily(self.test_df_2)[1]), str)
+        self.assertIs(type(best_session_daily(self.test_df_2)[2]), str)
+
+    def test_best_session_weekly(self):
+        self.assertEqual(len(best_session_weekly(self.test_df_2)), 3)
+        self.assertIs(type(best_session_weekly(self.test_df_2)[0]), int)
+        self.assertIs(type(best_session_weekly(self.test_df_2)[1]), str)
+        self.assertIs(type(best_session_weekly(self.test_df_2)[2]), str)
+
+    def test_best_session_monthly(self):
+        self.assertEqual(len(best_session_monthly(self.test_df_2)), 3)
+        self.assertIs(type(best_session_monthly(self.test_df_2)[0]), int)
+        self.assertIs(type(best_session_monthly(self.test_df_2)[1]), str)
+        self.assertIs(type(best_session_monthly(self.test_df_2)[2]), str)
 
 
 class TestAutogeneration(unittest.TestCase):
@@ -64,6 +130,7 @@ class TestWikiAPI(unittest.TestCase):
 
     def test_retrieve_definition(self):
         self.assertIs(type(retrieve_definition('Cat')), str)
+
 
 class TestLeitner(unittest.TestCase):
 
