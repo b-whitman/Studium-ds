@@ -14,8 +14,6 @@ class TestComparativeMetrics(unittest.TestCase):
         self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
                                       columns=['id', 'total_looked_at', 'session_start', 'session_end'])
         self.test_df_2 = convert_to_datetime(self.test_df_1)
-        self.test_df_3 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
-                                      columns=['id', 'total_looked_at', 'session_start', 'session_end']))
 
     def test_convert_to_datetime(self):
         self.assertEqual(len(self.test_df_1), len(convert_to_datetime(self.test_df_1)))
