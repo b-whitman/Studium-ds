@@ -62,6 +62,7 @@ def daily_cards_min_comparison(df):
         today_average = sum(todays_per_min) / len(todays_per_min)
         yesterday_average = sum(yesterday_per_min) / len(yesterday_per_min)
     elif len(todays_per_min) == 0:
+        # if no cards viewed today, cards per min average is 0
         today_average = 0
     elif len(yesterday_per_min) == 0:
         yesterday_average = 0
@@ -80,9 +81,14 @@ def daily_cards_min_comparison(df):
         # hex color code for black
         arrow = u"\u003D"
         # unicode for equal sign
-    difference = abs((today_average - yesterday_average) / yesterday_average * 100)
+    try:
+        difference = abs((today_average - yesterday_average) / yesterday_average * 100)
+    except ZeroDivisionError:
+        # if no cards viewed yesterday, cards per min up 100% today
+        # if both averages are zero, this will display 100% = in black
+        difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return s, color_code, today_average, yesterday_average
+    return s, color_code, today_average,
 
 
 def weekly_per_min_comparison(df):
@@ -119,9 +125,12 @@ def weekly_per_min_comparison(df):
     else:
         color_code = "000000"
         arrow = u"\u003D"
-    difference = abs((week_average - lastweek_average) / lastweek_average * 100)
+    try:
+        difference = abs((week_average - lastweek_average) / lastweek_average * 100)
+    except ZeroDivisionError:
+        difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return s, color_code, week_average, lastweek_average
+    return s, color_code, week_average
 
 
 def monthly_per_min_comparison(df):
@@ -158,32 +167,38 @@ def monthly_per_min_comparison(df):
     else:
         color_code = "000000"
         arrow = u"\u003D"
-    difference = abs((month_average - lastmonth_average) / lastmonth_average * 100)
+    try:
+        difference = abs((month_average - lastmonth_average) / lastmonth_average * 100)
+    except ZeroDivisionError:
+        difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return s, color_code
+    return s, color_code, month_average
+
 
 def best_session_length(df):
-    """Takes in dataframe of user session data and returns dataframe sorted with session of best cards per minute at the top"""
+    """Takes in dataframe of user session data and returns best session length in minutes (best session being session
+    with highest cards per minute """
     if len(df) == 0:
         best_length = 0
-        #if no data in dataframe, return 0
+        # if no data in dataframe, return 0
     else:
         df = convert_to_datetime_test_data(df)
-        #FIX TO NON-TEST FUNCTION
+        # FIX TO NON-TEST FUNCTION
         df = df.reindex(columns=df.columns.tolist() + ['cards_per_min', 'session_length'])
-        #adds necessary columns to dataframe
+        # adds necessary columns to dataframe
         for index, row in df.iterrows():
             df['session_length'].loc[index] = get_session_length(row)
             df['cards_per_min'].loc[index] = get_cards_per_min(row)
         df = df.sort_values(by=['cards_per_min'], ascending=False)
-        #sorts dataframe and puts highest cards per minute at the top
+        # sorts dataframe and puts highest cards per minute at the top
         best_length = (df['session_length'].iloc[0] / 60)
-        #converts session length in seconds to minutes
+        # converts session length in seconds to minutes
     return best_length
+
 
 def best_session_daily(df):
     """Function to determine the best session length in minutes for today and yesterday. Takes in a
-    user session dataframe and returns today's best session length and yesterday's best session length as an integer,
+    user session dataframe and returns today's best session length as an integer,
     a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
     df = convert_to_datetime_test_data(df)
     today = datetime.date.today()
@@ -211,13 +226,15 @@ def best_session_daily(df):
     try:
         difference = abs((today_best_session - yesterday_best_session) / yesterday_best_session * 100)
     except ZeroDivisionError:
+        # if no sessions yesterday, best session is up 100%
         difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return today_best_session, yesterday_best_session, s, color_code
+    return today_best_session, s, color_code
+
 
 def best_session_weekly(df):
     """Function to determine the best session length in minutes for this week and last week. Takes in a
-    user session dataframe and returns this week's best session length and last week's best session length as an integer,
+    user session dataframe and returns this week's best session length as an integer,
     a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
     df = convert_to_datetime_test_data(df)
     # FIX THIS LINE
@@ -247,13 +264,15 @@ def best_session_weekly(df):
     try:
         difference = abs((thisweek_best_session - lastweek_best_session) / lastweek_best_session * 100)
     except ZeroDivisionError:
+        # if no sessions last week, best session is up 100%
         difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return thisweek_best_session, lastweek_best_session, s, color_code
+    return thisweek_best_session, s, color_code
+
 
 def best_session_monthly(df):
     """Function to determine the best session length in minutes for this month and last month. Takes in a
-    user session dataframe and returns this month's best session length and last month's best session length as an integer,
+    user session dataframe and returns this month's best session length as an integer,
     a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
     df = convert_to_datetime_test_data(df)
     # FIX THIS LINE
@@ -283,6 +302,7 @@ def best_session_monthly(df):
     try:
         difference = abs((thismonth_best_session - lastmonth_best_session) / lastmonth_best_session * 100)
     except ZeroDivisionError:
+        # if last month has no sessions, the difference is up 100%
         difference = 100
     s = f"{difference:.2f}% {arrow}"
-    return thismonth_best_session, lastmonth_best_session, s, color_code
+    return thismonth_best_session, s, color_code
