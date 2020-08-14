@@ -27,9 +27,8 @@ def convert_to_datetime(df):
 
 
 def daily_cards_min_comparison(df):
-    """Function to compare today's avg cards per minute to yesterday's. Returns a string consisting of the absolute value of the
-    difference and the unicode for an upward (positive) or downward (negative) arrow, and a hex color code (red for
-    negative, green for positive), today's average, and yesterday's average  """
+    """Function to compare today's avg cards per minute to yesterday's. Returns a dictionary of daily cards per minute,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
     df = convert_to_datetime(df)
     today = datetime.date.today()
     yesterday = today - timedelta(days=1)
@@ -55,35 +54,34 @@ def daily_cards_min_comparison(df):
         today_average = 0
     elif len(yesterday_per_min) == 0:
         yesterday_average = 0
-    if today_average > yesterday_average:
-        color_code = "09B109"
-        # hex color code for green
-        arrow = u"\u2191"
-        # unicode for upward arrow
-    elif today_average < yesterday_average:
-        color_code = "CE2929"
-        # hex color code for red
-        arrow = u"\u2193"
-        # unicode for downward arrow
-    else:
-        color_code = "000000"
-        # hex color code for black
-        arrow = u"\u003D"
-        # unicode for equal sign
     try:
-        difference = abs((today_average - yesterday_average) / yesterday_average * 100)
+        difference = abs((today_average - yesterday_average) / yesterday_average) * 100
     except ZeroDivisionError:
         # if no cards viewed yesterday, cards per min up 100% today
         # if both averages are zero, this will display '0 100% =' in black
         difference = 100
-    s = f"{difference:.2f}% {arrow}"
-    return s, color_code, today_average
+    if today_average > yesterday_average:
+        color_code = "09B109"
+        # hex color code for green
+        arrow = "\u2191"
+        # unicode for upward arrow
+    elif today_average < yesterday_average:
+        color_code = "CE2929"
+        # hex color code for red
+        arrow = "\u2193"
+        # unicode for downward arrow
+    else:
+        color_code = "000000"
+        # hex color code for black
+        arrow = "\u003D"
+        # unicode for equal sign
+    result = make_results_dict(today_average, difference, color_code, arrow)
+    return result
 
 
 def weekly_per_min_comparison(df):
-    """Function to compare this week's avg cards per minute to last week's. Returns a string consisting of the absolute value of the
-    difference and the unicode for an upward (positive) or downward (negative) arrow, and a hex color code (red for
-    negative, green for positive), this week's average, and last week's average """
+    """Function to compare this week's avg cards per minute to last week's. Returns a dictionary of weekly cards per
+    minute, percentage difference, unicode for the up/down/equal sign, and a color code """
     df = convert_to_datetime(df)
     today = datetime.date.today()
     this_week_start = today - timedelta(days=7)
@@ -108,27 +106,26 @@ def weekly_per_min_comparison(df):
         lastweek_average = 0
     if week_average > lastweek_average:
         color_code = "09B109"
-        arrow = u"\u2191"
+        arrow = "\u2191"
     elif week_average < lastweek_average:
         color_code = "CE2929"
-        arrow = u"\u2193"
+        arrow = "\u2193"
     else:
         color_code = "000000"
-        arrow = u"\u003D"
+        arrow = "\u003D"
     try:
-        difference = abs((week_average - lastweek_average) / lastweek_average * 100)
+        difference = abs((week_average - lastweek_average) / lastweek_average) * 100
     except ZeroDivisionError:
         difference = 100
         # if no sessions last week, difference is up 100%
         # if both averages are zero, this will display '0 100% =' in black
-    s = f"{difference:.2f}% {arrow}"
-    return s, color_code, week_average
+    result = make_results_dict(week_average, difference, color_code, arrow)
+    return result
 
 
 def monthly_per_min_comparison(df):
-    """Function to compare today's stats to yesterday's. Returns a string consisting of the absolute value of the
-    difference and the unicode for an upward (positive) or downward (negative) arrow, and a hex color code (red for
-    negative, green for positive) """
+    """Function to compare today's stats to yesterday's. Returns a dictionary of monthly cards per minute,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
     df = convert_to_datetime(df)
     today = datetime.date.today()
     this_month_start = today - timedelta(days=30)
@@ -153,21 +150,21 @@ def monthly_per_min_comparison(df):
         lastmonth_average = 0
     if month_average > lastmonth_average:
         color_code = "09B109"
-        arrow = u"\u2191"
+        arrow = "\u2191"
     elif month_average < lastmonth_average:
         color_code = "CE2929"
-        arrow = u"\u2193"
+        arrow = "\u2193"
     else:
         color_code = "000000"
-        arrow = u"\u003D"
+        arrow = "\u003D"
     try:
-        difference = abs((month_average - lastmonth_average) / lastmonth_average * 100)
+        difference = abs((month_average - lastmonth_average) / lastmonth_average) * 100
     except ZeroDivisionError:
         difference = 100
         # if no sessions last month, difference is up 100%
         # if both averages are zero, this will display '0 100% =' in black
-    s = f"{difference:.2f}% {arrow}"
-    return s, color_code, month_average
+    result = make_results_dict(month_average, difference, color_code, arrow)
+    return result
 
 
 def best_session_length(df):
@@ -192,8 +189,8 @@ def best_session_length(df):
 
 def best_session_daily(df):
     """Function to determine the best session length in minutes for today and yesterday. Takes in a
-    user session dataframe and returns today's best session length as an integer,
-    a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
+    user session dataframe and returns a dictionary of daily best session,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
     df = convert_to_datetime(df)
     today = datetime.date.today()
     yesterday = today - timedelta(days=1)
@@ -210,27 +207,27 @@ def best_session_daily(df):
     yesterday_best_session = best_session_length(yesterday)
     if today_best_session > yesterday_best_session:
         color_code = "09B109"
-        arrow = u"\u2191"
+        arrow = "\u2191"
     elif today_best_session < yesterday_best_session:
         color_code = "CE2929"
-        arrow = u"\u2193"
+        arrow = "\u2193"
     else:
         color_code = "000000"
-        arrow = u"\u003D"
+        arrow = "\u003D"
     try:
-        difference = abs((today_best_session - yesterday_best_session) / yesterday_best_session * 100)
+        difference = abs((today_best_session - yesterday_best_session) / yesterday_best_session) * 100
     except ZeroDivisionError:
         # if no sessions yesterday, best session is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
-    s = f"{difference:.2f}% {arrow}"
-    return today_best_session, s, color_code
+    result = make_results_dict(today_best_session, difference, color_code, arrow)
+    return result
 
 
 def best_session_weekly(df):
     """Function to determine the best session length in minutes for this week and last week. Takes in a
-    user session dataframe and returns this week's best session length as an integer,
-    a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
+    user session dataframe and returns a dictionary of weekly best session,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
     df = convert_to_datetime(df)
     today = datetime.date.today()
     this_week_start = today - timedelta(days=7)
@@ -248,27 +245,27 @@ def best_session_weekly(df):
     lastweek_best_session = best_session_length(lastweek)
     if thisweek_best_session > lastweek_best_session:
         color_code = "09B109"
-        arrow = u"\u2191"
+        arrow = "\u2191"
     elif thisweek_best_session < lastweek_best_session:
         color_code = "CE2929"
-        arrow = u"\u2193"
+        arrow = "\u2193"
     else:
         color_code = "000000"
-        arrow = u"\u003D"
+        arrow = "\u003D"
     try:
-        difference = abs((thisweek_best_session - lastweek_best_session) / lastweek_best_session * 100)
+        difference = abs((thisweek_best_session - lastweek_best_session) / lastweek_best_session) * 100
     except ZeroDivisionError:
         # if no sessions last week, best session is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
-    s = f"{difference:.2f}% {arrow}"
-    return thisweek_best_session, s, color_code
+    result = make_results_dict(thisweek_best_session, difference, color_code, arrow)
+    return result
 
 
 def best_session_monthly(df):
     """Function to determine the best session length in minutes for this month and last month. Takes in a
-    user session dataframe and returns this month's best session length as an integer,
-    a string of the difference in percent and the unicode for up arrow or down arrow, and a color code"""
+    user session dataframe and returns a dictionary of monthly best session,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
     df = convert_to_datetime(df)
     today = datetime.date.today()
     this_month_start = today - timedelta(days=30)
@@ -286,18 +283,23 @@ def best_session_monthly(df):
     lastmonth_best_session = best_session_length(lastmonth)
     if thismonth_best_session > lastmonth_best_session:
         color_code = "09B109"
-        arrow = u"\u2191"
+        arrow = "\u2191"
     elif thismonth_best_session < lastmonth_best_session:
         color_code = "CE2929"
-        arrow = u"\u2193"
+        arrow = "\u2193"
     else:
         color_code = "000000"
-        arrow = u"\u003D"
+        arrow = "\u003D"
     try:
-        difference = abs((thismonth_best_session - lastmonth_best_session) / lastmonth_best_session * 100)
+        difference = abs((thismonth_best_session - lastmonth_best_session) / lastmonth_best_session) * 100
     except ZeroDivisionError:
         # if last month has no sessions, the difference is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
-    s = f"{difference:.2f}% {arrow}"
-    return thismonth_best_session, s, color_code
+    result = make_results_dict(thismonth_best_session, difference, color_code, arrow)
+    return result
+
+
+def make_results_dict(metric, difference, color, unicode):
+    results_dict = {'metric': metric, 'difference': difference, 'color_code': color, 'unicode': unicode}
+    return results_dict

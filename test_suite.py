@@ -3,15 +3,15 @@ from retrieve_definition import text_wrangle, open_search, get_API_params, get_o
 from autogenerate_decks import batch_search, get_article_size, get_search_string, get_params_autogen, get_params_size
 from leitner import leitner_dates
 from comparative_metrics import get_session_length, get_cards_per_min, convert_to_datetime, best_session_length, \
-        daily_cards_min_comparison, weekly_per_min_comparison, monthly_per_min_comparison, best_session_daily, \
-        best_session_monthly, best_session_weekly
+    daily_cards_min_comparison, weekly_per_min_comparison, monthly_per_min_comparison, best_session_daily, \
+    best_session_monthly, best_session_weekly, make_results_dict
 import pandas as pd
 import numpy as np
 
 
 class TestComparativeMetrics(unittest.TestCase):
     def setUp(self):
-        self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
+        self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220000, 1583015820000]],
                                       columns=['id', 'total_looked_at', 'session_start', 'session_end'])
         self.test_df_2 = convert_to_datetime(self.test_df_1)
 
@@ -33,40 +33,54 @@ class TestComparativeMetrics(unittest.TestCase):
         self.assertEqual(best_session_length(self.test_df_2), 10.0)
 
     def test_daily_cards_min_comparison(self):
-        self.assertEqual(len(daily_cards_min_comparison(self.test_df_2)), 3)
-        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[0]), str)
-        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[1]), str)
-        self.assertIs(type(daily_cards_min_comparison(self.test_df_2)[2]), int)
+        self.assertEqual(len(daily_cards_min_comparison(self.test_df_2)), 4)
+        self.assertEqual(daily_cards_min_comparison(self.test_df_2)['metric'], 0)
+        self.assertEqual(daily_cards_min_comparison(self.test_df_2)['difference'], 100)
+        self.assertEqual(daily_cards_min_comparison(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(daily_cards_min_comparison(self.test_df_2)['unicode'], u'\u003D')
 
     def test_weekly_per_min_comparison(self):
-        self.assertEqual(len(weekly_per_min_comparison(self.test_df_2)), 3)
-        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[0]), str)
-        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[1]), str)
-        self.assertIs(type(weekly_per_min_comparison(self.test_df_2)[2]), int)
+        self.assertEqual(len(weekly_per_min_comparison(self.test_df_2)), 4)
+        self.assertEqual(weekly_per_min_comparison(self.test_df_2)['metric'], 0)
+        self.assertEqual(weekly_per_min_comparison(self.test_df_2)['difference'], 100)
+        self.assertEqual(weekly_per_min_comparison(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(weekly_per_min_comparison(self.test_df_2)['unicode'], u'\u003D')
 
     def test_monthly_per_min_comparison(self):
-        self.assertEqual(len(monthly_per_min_comparison(self.test_df_2)), 3)
-        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[0]), str)
-        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[1]), str)
-        self.assertIs(type(monthly_per_min_comparison(self.test_df_2)[2]), int)
+        self.assertEqual(len(monthly_per_min_comparison(self.test_df_2)), 4)
+        self.assertEqual(monthly_per_min_comparison(self.test_df_2)['metric'], 0)
+        self.assertEqual(monthly_per_min_comparison(self.test_df_2)['difference'], 100)
+        self.assertEqual(monthly_per_min_comparison(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(monthly_per_min_comparison(self.test_df_2)['unicode'], u'\u003D')
 
     def test_best_session_daily(self):
-        self.assertEqual(len(best_session_daily(self.test_df_2)), 3)
-        self.assertIs(type(best_session_daily(self.test_df_2)[0]), int)
-        self.assertIs(type(best_session_daily(self.test_df_2)[1]), str)
-        self.assertIs(type(best_session_daily(self.test_df_2)[2]), str)
+        self.assertEqual(len(best_session_daily(self.test_df_2)), 4)
+        self.assertEqual(best_session_daily(self.test_df_2)['metric'], 0)
+        self.assertEqual(best_session_daily(self.test_df_2)['difference'], 100)
+        self.assertEqual(best_session_daily(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(best_session_daily(self.test_df_2)['unicode'], u'\u003D')
 
     def test_best_session_weekly(self):
-        self.assertEqual(len(best_session_weekly(self.test_df_2)), 3)
-        self.assertIs(type(best_session_weekly(self.test_df_2)[0]), int)
-        self.assertIs(type(best_session_weekly(self.test_df_2)[1]), str)
-        self.assertIs(type(best_session_weekly(self.test_df_2)[2]), str)
+        self.assertEqual(len(best_session_daily(self.test_df_2)), 4)
+        self.assertEqual(best_session_weekly(self.test_df_2)['metric'], 0)
+        self.assertEqual(best_session_weekly(self.test_df_2)['difference'], 100)
+        self.assertEqual(best_session_weekly(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(best_session_weekly(self.test_df_2)['unicode'], u'\u003D')
 
     def test_best_session_monthly(self):
-        self.assertEqual(len(best_session_monthly(self.test_df_2)), 3)
-        self.assertIs(type(best_session_monthly(self.test_df_2)[0]), int)
-        self.assertIs(type(best_session_monthly(self.test_df_2)[1]), str)
-        self.assertIs(type(best_session_monthly(self.test_df_2)[2]), str)
+        self.assertEqual(len(best_session_monthly(self.test_df_2)), 4)
+        self.assertEqual(best_session_monthly(self.test_df_2)['metric'], 0)
+        self.assertEqual(best_session_monthly(self.test_df_2)['difference'], 100)
+        self.assertEqual(best_session_monthly(self.test_df_2)['color_code'], '000000')
+        self.assertEqual(best_session_monthly(self.test_df_2)['unicode'], u'\u003D')
+
+    def test_make_results_dict(self):
+        metric = 1
+        difference = 1
+        color = 'blue'
+        unicode = '='
+        self.assertEqual(make_results_dict(metric, difference, color, unicode), {'metric': 1, 'difference': 1,
+                                                                                 'color_code': 'blue', 'unicode': u'\u003D'})
 
 
 class TestAutogeneration(unittest.TestCase):
