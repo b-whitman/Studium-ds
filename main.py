@@ -13,6 +13,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 from autogenerate_decks import autogenerate
+from comparative_metrics import *
 import gauge_plot
 from retrieve_definition import retrieve_definition
 from leitner import leitner_dates
@@ -39,6 +40,12 @@ class Card(BaseModel):
     id : str
     is_starred : bool
     comfort_level : int
+
+class User(BaseModel):
+    id : str
+    total_looked_at : int
+    session_start : int
+    session_end : int
 
 
 @app.get("/")
@@ -103,6 +110,30 @@ async def leitner_system(user: List[Card]):
     df_modified = df.apply(leitner_dates, axis=1)
     data_json = df_modified.to_json(orient='records', indent=2)
     return Response(data_json)
+
+
+@app.post('/metrics')
+async def get_metrics(user_data: List[User]):
+    """Function to get all user metrics needed. Returns an array of objects [daily, weekle, monthly] 
+    cards per minute and best sessions including percentage difference, 
+    unicode for the (up/down/equal) sign, and a color code"""
+    df = pd.DataFrame([dict(x) for x in user_data])
+
+    # saving each function's result into a variable
+    daily_cards = daily_cards_min_comparison(df)
+    weekly_cards = weekly_per_min_comparison(df)
+    monthly_cards = monthly_per_min_comparison(df)
+
+    best_daily = best_session_daily(df)
+    best_weekly = best_session_weekly(df)
+    best_monthly = best_session_monthly(df)
+
+    # return all metrics data as an array of JSON objects
+    metrics_data = [daily_cards, weekly_cards, monthly_cards,
+                    best_daily, best_weekly, best_monthly]
+    
+    return metrics_data
+
 
 
 if __name__ == '__main__':
