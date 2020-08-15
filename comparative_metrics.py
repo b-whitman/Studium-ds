@@ -76,6 +76,7 @@ def daily_cards_min_comparison(df):
         arrow = "\u003D"
         # unicode for equal sign
     result = make_results_dict(today_average, difference, color_code, arrow)
+    result['daily_cards_min'] = result.pop('metric')
     return result
 
 
@@ -120,6 +121,7 @@ def weekly_per_min_comparison(df):
         # if no sessions last week, difference is up 100%
         # if both averages are zero, this will display '0 100% =' in black
     result = make_results_dict(week_average, difference, color_code, arrow)
+    result['weekly_cards_min'] = result.pop('metric')
     return result
 
 
@@ -164,6 +166,7 @@ def monthly_per_min_comparison(df):
         # if no sessions last month, difference is up 100%
         # if both averages are zero, this will display '0 100% =' in black
     result = make_results_dict(month_average, difference, color_code, arrow)
+    result['monthly_cards_min'] = result.pop('metric')
     return result
 
 
@@ -221,6 +224,7 @@ def best_session_daily(df):
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
     result = make_results_dict(today_best_session, difference, color_code, arrow)
+    result['best_session_daily'] = result.pop('metric')
     return result
 
 
@@ -259,6 +263,7 @@ def best_session_weekly(df):
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
     result = make_results_dict(thisweek_best_session, difference, color_code, arrow)
+    result['best_session_weekly'] = result.pop('metric')
     return result
 
 
@@ -297,6 +302,7 @@ def best_session_monthly(df):
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
     result = make_results_dict(thismonth_best_session, difference, color_code, arrow)
+    result['best_session_monthly'] = result.pop('metric')
     return result
 
 
