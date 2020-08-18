@@ -21,8 +21,8 @@ def get_cards_per_min(row):
 
 def convert_to_datetime(df):
     """Convert milliseconds since epoch timestamp to pandas datetime object"""
-    df['session_start'] = pd.to_datetime(df['session_start'], unit='ms')
-    df['session_end'] = pd.to_datetime(df['session_end'], unit='ms')
+    df['session_start'] = pd.to_datetime(df['session_start'], unit='s')
+    df['session_end'] = pd.to_datetime(df['session_end'], unit='s')
     return df
 
 
