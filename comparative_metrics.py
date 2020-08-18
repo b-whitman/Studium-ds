@@ -239,10 +239,14 @@ def best_session_weekly(df):
     this_week_card_ids = []
     lastweek_card_ids = []
     for index, row in df.iterrows():
-        if row['session_start'].date() >= this_week_start:
-            this_week_card_ids.append(row[id])
-        elif last_week_start <= row['session_start'].date() < this_week_start:
-            lastweek_card_ids.append(row[id])
+        try:
+            if row['session_start'].date() >= this_week_start:
+                this_week_card_ids.append(row[id])
+            elif last_week_start <= row['session_start'].date() < this_week_start:
+                lastweek_card_ids.append(row[id])
+        except IndexError:
+            this_week_card_ids = []
+            lastweek_card_ids = []
     thisweek = df[df['id'].isin(this_week_card_ids)]
     lastweek = df[df['id'].isin(lastweek_card_ids)]
     thisweek_best_session = best_session_length(thisweek)
