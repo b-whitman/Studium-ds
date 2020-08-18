@@ -3,7 +3,9 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 def leitner_proportions(df):
-
+    """
+    Calculate proportion of cards belonging to each Leitner level.
+    """
     denom = df.shape[0]
     prop_dict = {}
 
@@ -19,7 +21,10 @@ def leitner_proportions(df):
     return prop_df
 
 def get_label_locs(prop_df):
-    
+    """
+    Get Plotly 'paper' locations for labels to appear in middle of 
+    visualization bars regardless of bar size.
+    """
     locs = [0 for _ in range(5)]
     
     for i in range(4):
@@ -31,8 +36,18 @@ def get_label_locs(prop_df):
     return locs
 
 
-def leitner_bar(df):
-    
+def leitner_bar(levels):
+    """
+    Given user's Leitner levels for a certain deck of flashcards, returns 
+    Plotly JSON object for a visualization.
+    TODO: Format to accept a list of integers instead of a dataframe. 
+    Ultimately it would probably be better to do this without converting to a 
+    dataframe at all, but weirdly I'm more comfortable working with 
+    dataframes for data manipulation like this, so it was just what occurred 
+    to me first.
+    """
+
+    df = pd.DataFrame(levels, columns=['comfort_level'])
     prop_df = leitner_proportions(df)
     locs = get_label_locs(prop_df)
 
@@ -59,10 +74,9 @@ def leitner_bar(df):
             yref='paper',
             font=dict(
                 family='Lato',
-                size=49.0666,
+                size=30,
                 color="#000000")
-            )
-            ) for xval, txt in zip(locs, plotly_df.index)
+            ) for xval, txt in zip(locs, prop_df.index)
         ]
         )
     fig.update_traces(marker=dict(color="#FF909A"),
@@ -75,5 +89,4 @@ def leitner_bar(df):
                      selector=dict(name='4'))
     fig.update_traces(marker=dict(color="#FFF4BD"),
                      selector=dict(name='5'))
-    
     return fig.to_json()

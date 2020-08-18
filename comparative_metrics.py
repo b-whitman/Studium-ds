@@ -23,6 +23,7 @@ def convert_to_datetime(df):
     """Convert milliseconds since epoch timestamp to pandas datetime object"""
     df['session_start'] = pd.to_datetime(df['session_start'], unit='ms', cache=False)
     df['session_end'] = pd.to_datetime(df['session_end'], unit='ms', cache=False)
+
     return df
 
 
@@ -200,10 +201,14 @@ def best_session_daily(df):
     today_card_ids = []
     yesterday_card_ids = []
     for index, row in df.iterrows():
-        if row['session_start'].date() == today:
-            today_card_ids.append(row['id'])
-        elif row['session_start'].date() == yesterday:
-            yesterday_card_ids.append(row['id'])
+        try:
+            if row['session_start'].date() == today:
+                today_card_ids.append(row['id'])
+            elif row['session_start'].date() == yesterday:
+                yesterday_card_ids.append(row['id'])
+        except IndexError:
+            today_card_ids = []
+            yesterday_card_ids = []
     today = df[df['id'].isin(today_card_ids)]
     yesterday = df[df['id'].isin(yesterday_card_ids)]
     today_best_session = best_session_length(today)
@@ -239,10 +244,14 @@ def best_session_weekly(df):
     this_week_card_ids = []
     lastweek_card_ids = []
     for index, row in df.iterrows():
-        if row['session_start'].date() >= this_week_start:
-            this_week_card_ids.append(row[id])
-        elif last_week_start <= row['session_start'].date() < this_week_start:
-            lastweek_card_ids.append(row[id])
+        try:
+            if row['session_start'].date() >= this_week_start:
+                this_week_card_ids.append(row[id])
+            elif last_week_start <= row['session_start'].date() < this_week_start:
+                lastweek_card_ids.append(row[id])
+        except IndexError:
+            this_week_card_ids = []
+            lastweek_card_ids = []
     thisweek = df[df['id'].isin(this_week_card_ids)]
     lastweek = df[df['id'].isin(lastweek_card_ids)]
     thisweek_best_session = best_session_length(thisweek)
@@ -278,10 +287,14 @@ def best_session_monthly(df):
     this_month_card_ids = []
     lastmonth_card_ids = []
     for index, row in df.iterrows():
-        if row['session_start'].date() >= this_month_start:
-            this_month_card_ids.append(row[id])
-        elif last_month_start <= row['session_start'].date() < this_month_start:
-            lastmonth_card_ids.append(row[id])
+        try:
+            if row['session_start'].date() >= this_month_start:
+                this_month_card_ids.append(row[id])
+            elif last_month_start <= row['session_start'].date() < this_month_start:
+                lastmonth_card_ids.append(row[id])
+        except IndexError:
+            this_month_card_ids = []
+            lastmonth_card_ids = []
     thismonth = df[df['id'].isin(this_month_card_ids)]
     lastmonth = df[df['id'].isin(lastmonth_card_ids)]
     thismonth_best_session = best_session_length(thismonth)
