@@ -128,9 +128,16 @@ async def get_metrics(user_data: List[User]):
     best_weekly = best_session_weekly(df)
     best_monthly = best_session_monthly(df)
 
+    daily_viewed_card = daily_viewed(df)
+    weekly_viewed_card = weekly_viewed(df)
+    monthly_viewed_card = monthly_viewed(df)
+
+
     # return all metrics data as an array of JSON objects
     metrics_data = [daily_cards, weekly_cards, monthly_cards,
-                    best_daily, best_weekly, best_monthly]
+                    best_daily, best_weekly, best_monthly,
+                    daily_viewed_card, weekly_viewed_card, monthly_viewed_card]
+    print(metrics_data)
     
     return metrics_data
 

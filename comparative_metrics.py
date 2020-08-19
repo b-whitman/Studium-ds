@@ -82,9 +82,7 @@ def daily_cards_min_comparison(df):
         # unicode for equal sign
     result = make_results_dict(today_average, difference, color_code, arrow)
     result['daily_cards_min'] = result.pop('metric')
-    today_viewed_result = total_viewed(today_viewed, yesterday_viewed)
-    today_viewed_result['today_viewed'] = today_viewed_result.pop('total_viewed')
-    return result, today_viewed_result
+    return result
 
 
 def weekly_per_min_comparison(df):
@@ -133,9 +131,7 @@ def weekly_per_min_comparison(df):
         # if both averages are zero, this will display '0 100% =' in black
     result = make_results_dict(week_average, difference, color_code, arrow)
     result['weekly_cards_min'] = result.pop('metric')
-    week_viewed_result = total_viewed(thisweek_viewed, lastweek_viewed)
-    week_viewed_result['thisweek_viewed'] = week_viewed_result.pop('total_viewed')
-    return result, week_viewed_result
+    return result
 
 
 def monthly_per_min_comparison(df):
@@ -184,9 +180,7 @@ def monthly_per_min_comparison(df):
         # if both averages are zero, this will display '0 100% =' in black
     result = make_results_dict(month_average, difference, color_code, arrow)
     result['monthly_cards_min'] = result.pop('metric')
-    month_viewed_result = total_viewed(thismonth_viewed, lastmonth_viewed)
-    month_viewed_result['thismonth_viewed'] = month_viewed_result.pop('total_viewed')
-    return result, month_viewed_result
+    return result
 
 
 def best_session_length(df):
@@ -231,6 +225,7 @@ def best_session_daily(df):
     yesterday = df[df['id'].isin(yesterday_card_ids)]
     today_best_session = best_session_length(today)
     yesterday_best_session = best_session_length(yesterday)
+
     if today_best_session > yesterday_best_session:
         color_code = "09B109"
         arrow = "\u2191"
@@ -240,9 +235,10 @@ def best_session_daily(df):
     else:
         color_code = "000000"
         arrow = "\u003D"
-    try:
+
+    if yesterday_best_session > 0:
         difference = abs((today_best_session - yesterday_best_session) / yesterday_best_session) * 100
-    except ZeroDivisionError:
+    else:
         # if no sessions yesterday, best session is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
@@ -274,6 +270,7 @@ def best_session_weekly(df):
     lastweek = df[df['id'].isin(lastweek_card_ids)]
     thisweek_best_session = best_session_length(thisweek)
     lastweek_best_session = best_session_length(lastweek)
+
     if thisweek_best_session > lastweek_best_session:
         color_code = "09B109"
         arrow = "\u2191"
@@ -283,9 +280,10 @@ def best_session_weekly(df):
     else:
         color_code = "000000"
         arrow = "\u003D"
-    try:
+
+    if lastweek_best_session > 0:
         difference = abs((thisweek_best_session - lastweek_best_session) / lastweek_best_session) * 100
-    except ZeroDivisionError:
+    else:
         # if no sessions last week, best session is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
@@ -317,6 +315,7 @@ def best_session_monthly(df):
     lastmonth = df[df['id'].isin(lastmonth_card_ids)]
     thismonth_best_session = best_session_length(thismonth)
     lastmonth_best_session = best_session_length(lastmonth)
+
     if thismonth_best_session > lastmonth_best_session:
         color_code = "09B109"
         arrow = "\u2191"
@@ -326,15 +325,88 @@ def best_session_monthly(df):
     else:
         color_code = "000000"
         arrow = "\u003D"
-    try:
+
+    if lastmonth_best_session > 0:
         difference = abs((thismonth_best_session - lastmonth_best_session) / lastmonth_best_session) * 100
-    except ZeroDivisionError:
+    else:
         # if last month has no sessions, the difference is up 100%
         # if both best_sessions are zero, this will display '0 100% =' in black
         difference = 100
     result = make_results_dict(thismonth_best_session, difference, color_code, arrow)
     result['best_session_monthly'] = result.pop('metric')
     return result
+
+def daily_viewed(df):
+    """Function to compare today's avg cards per minute to yesterday's. Returns a dictionary of daily cards per minute,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
+    df = convert_to_datetime(df)
+    today = datetime.date.today()
+    yesterday = today - timedelta(days=1)
+    todays_per_min = []
+    yesterday_per_min = []
+    today_viewed = []
+    yesterday_viewed = []
+    # this iterates over each row in the dataframe, applying the logic and adding the cards_per_min value to the
+    # appropriate list
+    for index, row in df.iterrows():
+        if row['session_start'].date() == today:
+            per_min = get_cards_per_min(row)
+            todays_per_min.append(per_min)
+            today_viewed.append(row['total_looked_at'])
+        if row['session_start'].date() == yesterday:
+            per_min = get_cards_per_min(row)
+            yesterday_per_min.append(per_min)
+            yesterday_viewed.append(row['total_looked_at'])
+    today_viewed_result = total_viewed(today_viewed, yesterday_viewed)
+    return today_viewed_result
+
+
+def weekly_viewed(df):
+    """Function to compare this week's avg cards per minute to last week's. Returns a dictionary of weekly cards per
+    minute, percentage difference, unicode for the up/down/equal sign, and a color code """
+    df = convert_to_datetime(df)
+    today = datetime.date.today()
+    this_week_start = today - timedelta(days=7)
+    last_week_start = today - timedelta(days=14)
+    week_per_min = []
+    lastweek_per_min = []
+    thisweek_viewed = []
+    lastweek_viewed = []
+    for index, row in df.iterrows():
+        if row['session_start'].date() >= this_week_start:
+            per_min = get_cards_per_min(row)
+            week_per_min.append(per_min)
+            thisweek_viewed.append(row['total_looked_at'])
+        if last_week_start <= row['session_start'].date() < this_week_start:
+            per_min = get_cards_per_min(row)
+            lastweek_per_min.append(per_min)
+            lastweek_viewed.append(row['total_looked_at'])
+    week_viewed_result = total_viewed(thisweek_viewed, lastweek_viewed)
+    return week_viewed_result
+
+
+def monthly_viewed(df):
+    """Function to compare today's stats to yesterday's. Returns a dictionary of monthly cards per minute,
+    percentage difference, unicode for the up/down/equal sign, and a color code"""
+    df = convert_to_datetime(df)
+    today = datetime.date.today()
+    this_month_start = today - timedelta(days=30)
+    last_month_start = today - timedelta(days=60)
+    month_per_min = []
+    lastmonth_per_min = []
+    thismonth_viewed = []
+    lastmonth_viewed = []
+    for index, row in df.iterrows():
+        if row['session_start'].date() >= this_month_start:
+            per_min = get_cards_per_min(row)
+            month_per_min.append(per_min)
+            thismonth_viewed.append(row['total_looked_at'])
+        if last_month_start <= row['session_start'].date() < this_month_start:
+            per_min = get_cards_per_min(row)
+            lastmonth_per_min.append(per_min)
+            lastmonth_viewed.append(row['total_looked_at'])
+    month_viewed_result = total_viewed(thismonth_viewed, lastmonth_viewed)
+    return month_viewed_result
 
 
 def make_results_dict(metric, difference, color, unicode):
