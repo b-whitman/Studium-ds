@@ -358,6 +358,7 @@ def daily_viewed(df):
             yesterday_per_min.append(per_min)
             yesterday_viewed.append(row['total_looked_at'])
     today_viewed_result = total_viewed(today_viewed, yesterday_viewed)
+    today_viewed_result['total_viewed_daily'] = today_viewed_result.pop('total_viewed')
     return today_viewed_result
 
 
@@ -382,6 +383,8 @@ def weekly_viewed(df):
             lastweek_per_min.append(per_min)
             lastweek_viewed.append(row['total_looked_at'])
     week_viewed_result = total_viewed(thisweek_viewed, lastweek_viewed)
+    week_viewed_result['total_viewed_weekly'] = week_viewed_result.pop('total_viewed')
+
     return week_viewed_result
 
 
@@ -406,6 +409,7 @@ def monthly_viewed(df):
             lastmonth_per_min.append(per_min)
             lastmonth_viewed.append(row['total_looked_at'])
     month_viewed_result = total_viewed(thismonth_viewed, lastmonth_viewed)
+    month_viewed_result['total_viewed_monthly'] = month_viewed_result.pop('total_viewed')
     return month_viewed_result
 
 
