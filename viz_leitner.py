@@ -89,5 +89,4 @@ def leitner_bar(levels):
                      selector=dict(name='4'))
     fig.update_traces(marker=dict(color="#FFF4BD"),
                      selector=dict(name='5'))
-    fig.show()
     return fig.to_json()
