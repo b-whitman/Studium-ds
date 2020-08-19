@@ -202,9 +202,9 @@ def best_session_daily(df):
     yesterday_card_ids = []
     for index, row in df.iterrows():
         try:
-            if row['session_start'].date() == today:
+            if str(row['session_start'].date()) == str(today):
                 today_card_ids.append(row['id'])
-            elif row['session_start'].date() == yesterday:
+            elif str(row['session_start'].date()) == str(yesterday):
                 yesterday_card_ids.append(row['id'])
         except IndexError:
             today_card_ids = []
@@ -245,10 +245,10 @@ def best_session_weekly(df):
     lastweek_card_ids = []
     for index, row in df.iterrows():
         try:
-            if row['session_start'].date() >= this_week_start:
-                this_week_card_ids.append(row[id])
-            elif last_week_start <= row['session_start'].date() < this_week_start:
-                lastweek_card_ids.append(row[id])
+            if str(row['session_start'].date()) >= str(this_week_start):
+                this_week_card_ids.append(row['id'])
+            elif str(last_week_start) <= str(row['session_start'].date()) < str(this_week_start):
+                lastweek_card_ids.append(row['id'])
         except IndexError:
             this_week_card_ids = []
             lastweek_card_ids = []
@@ -288,10 +288,10 @@ def best_session_monthly(df):
     lastmonth_card_ids = []
     for index, row in df.iterrows():
         try:
-            if row['session_start'].date() >= this_month_start:
-                this_month_card_ids.append(row[id])
-            elif last_month_start <= row['session_start'].date() < this_month_start:
-                lastmonth_card_ids.append(row[id])
+            if str(row['session_start'].date()) >= str(this_month_start):
+                this_month_card_ids.append(row['id'])
+            elif str(last_month_start) <= str(row['session_start'].date()) < str(this_month_start):
+                lastmonth_card_ids.append(row['id'])
         except IndexError:
             this_month_card_ids = []
             lastmonth_card_ids = []
