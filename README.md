@@ -7,7 +7,7 @@ You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com
 
 ## Contributors
 
-|                                       [Amer Mahyoub](https://github.com/ameralhomdy)                                        |                                       [Ben Witman](https://github.com/b-whitman)                                        |                                       [Cai Nowicki](https://github.com/dunkelweizen)                                        |
+|                                       [Amer Mahyoub](https://github.com/ameralhomdy)                                        |                                       [Ben Whitman](https://github.com/b-whitman)                                        |                                       [Cai Nowicki](https://github.com/dunkelweizen)                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 |                      [<img src="https://avatars0.githubusercontent.com/u/18502421?s=400&u=0968b250d7df526da558e489c8b6a3bcca492a0b&v=4" width = "200" />](https://github.com/ameralhomdy)                       |                      [<img src="https://ca.slack-edge.com/ESZCHB482-W012JQ0JDDZ-c45d031dd395-512" width = "200" />](https://github.com/b-whitman)                       |                      [<img src="https://avatars1.githubusercontent.com/u/53185634?s=400&v=4" width = "200" />](https://github.com/dunkelweizen)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
 |                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ameralhomdy)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/b-whitman)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/dunkelweizen)             |
@@ -28,9 +28,9 @@ You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com
 
 A flashcard application for students studying life sciences. It's Quizlet meets Anki 
 
+Data Science contribution to the project is a Heroku API with endpoints that will return auto-generated text for flashcards, a set of auto-generated cards for a deck on a specific term, dates for the next time to show the user a specific flashcard based on the Leitner spaced repetition system, or metrics/visualizations for the user's studying sessions.
 
-
-1️⃣ [Deployed Front End](🚫add link to deployed app here)
+[Deployed Front End](https://studium-fe.herokuapp.com/)
 
 ### Tech Stack
 - Python
@@ -38,47 +38,19 @@ A flashcard application for students studying life sciences. It's Quizlet meets 
 - Heroku (both front-end and custom API)
 - FastAPI
 
-
-###  Predictions
-
-🚫 Describe your models here
-No predictive models yet!
-
-### 2️⃣ Explanatory Variables
-
--   Explanatory Variable 1
--   Explanatory Variable 2
--   Explanatory Variable 3
--   Explanatory Variable 4
--   Explanatory Variable 5
-
 ### Data Sources
 
 
--   [Source 1] (🚫add link to python notebook here)
--   [Source 2] (🚫add link to python notebook here)
--   [Source 3] (🚫add link to python notebook here)
--   [Source 4] (🚫add link to python notebook here)
--   [Source 5] (🚫add link to python notebook here)
+-   [MediaWiki API on Wikipedia.org] (https://en.wikipedia.org/w/api.php)
+-   [User Data from app] 
 
-### Python Notebooks
 
-🚫  Add to or delete python notebook links as needed for your project
+### How to connect to the web API
 
-[Python Notebook 1](🚫add link to python notebook here)
+You can connect to the DS web api by sending a GET or POST requests. 
+Go to https://studium-ds.herokuapp.com/docs for full documentation. All features of the API can be trialed from the FastAPI docs page.
 
-[Python Notebook 2](🚫add link to python notebook here)
 
-[Python Notebook 3](🚫add link to python notebook here)
-
-### 3️⃣ How to connect to the web API
-
-You can connect to the DS web api bu sending a GET or POST requests. 
-Go to https://studium-ds.herokuapp.com/docs for full documentation
-
-### 3️⃣ How to connect to the data API
-
-🚫 List directions on how to connect to the API here
 
 ## Contributing
 
@@ -118,6 +90,6 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/Studium-be) for details on the backend of our project.
 
-See [Front End Documentation](_link to your front end readme here_) for details on the front end of our project.
+See [Front End Documentation](https://github.com/Lambda-School-Labs/Studium-fe) for details on the front end of our project.
