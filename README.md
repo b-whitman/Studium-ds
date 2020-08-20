@@ -28,9 +28,9 @@ You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com
 
 A flashcard application for students studying life sciences. It's Quizlet meets Anki 
 
+Data Science contribution to the project is a Heroku API with endpoints that will return auto-generated text for flashcards, a set of auto-generated cards for a deck on a specific term, dates for the next time to show the user a specific flashcard based on the Leitner spaced repetition system, or metrics/visualizations for the user's studying sessions.
 
-
-1️⃣ [Deployed Front End](🚫add link to deployed app here)
+1️⃣ [Deployed Front End](https://studium-fe.herokuapp.com/)
 
 ### Tech Stack
 - Python
@@ -38,47 +38,19 @@ A flashcard application for students studying life sciences. It's Quizlet meets 
 - Heroku (both front-end and custom API)
 - FastAPI
 
-
-###  Predictions
-
-🚫 Describe your models here
-No predictive models yet!
-
-### 2️⃣ Explanatory Variables
-
--   Explanatory Variable 1
--   Explanatory Variable 2
--   Explanatory Variable 3
--   Explanatory Variable 4
--   Explanatory Variable 5
-
 ### Data Sources
 
 
--   [Source 1] (🚫add link to python notebook here)
--   [Source 2] (🚫add link to python notebook here)
--   [Source 3] (🚫add link to python notebook here)
--   [Source 4] (🚫add link to python notebook here)
--   [Source 5] (🚫add link to python notebook here)
+-   [MediaWiki API on Wikipedia.org] (https://en.wikipedia.org/w/api.php)
+-   [User Data from app] 
 
-### Python Notebooks
-
-🚫  Add to or delete python notebook links as needed for your project
-
-[Python Notebook 1](🚫add link to python notebook here)
-
-[Python Notebook 2](🚫add link to python notebook here)
-
-[Python Notebook 3](🚫add link to python notebook here)
 
 ### 3️⃣ How to connect to the web API
 
 You can connect to the DS web api bu sending a GET or POST requests. 
-Go to https://studium-ds.herokuapp.com/docs for full documentation
+Go to https://studium-ds.herokuapp.com/docs for full documentation. All features of the API can be trialed from the FastAPI docs page.
 
-### 3️⃣ How to connect to the data API
 
-🚫 List directions on how to connect to the API here
 
 ## Contributing
 
@@ -118,6 +90,6 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/Studium-be) for details on the backend of our project.
 
-See [Front End Documentation](_link to your front end readme here_) for details on the front end of our project.
+See [Front End Documentation](https://github.com/Lambda-School-Labs/Studium-fe) for details on the front end of our project.
