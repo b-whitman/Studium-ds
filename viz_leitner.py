@@ -51,7 +51,7 @@ def leitner_bar(levels):
     prop_df = leitner_proportions(df)
     locs = get_label_locs(prop_df)
 
-    fig = px.bar(prop_df.T, orientation='h')
+    fig = px.bar(prop_df.T, orientation='h', width=400, height=200)
     fig.update_xaxes(
         showticklabels=False,
         showgrid=False,
