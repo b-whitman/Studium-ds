@@ -30,7 +30,7 @@ A flashcard application for students studying life sciences. It's Quizlet meets 
 
 Data Science contribution to the project is a Heroku API with endpoints that will return auto-generated text for flashcards, a set of auto-generated cards for a deck on a specific term, dates for the next time to show the user a specific flashcard based on the Leitner spaced repetition system, or metrics/visualizations for the user's studying sessions.
 
-1️⃣ [Deployed Front End](https://studium-fe.herokuapp.com/)
+[Deployed Front End](https://studium-fe.herokuapp.com/)
 
 ### Tech Stack
 - Python
@@ -45,9 +45,9 @@ Data Science contribution to the project is a Heroku API with endpoints that wil
 -   [User Data from app] 
 
 
-### 3️⃣ How to connect to the web API
+### How to connect to the web API
 
-You can connect to the DS web api bu sending a GET or POST requests. 
+You can connect to the DS web api by sending a GET or POST requests. 
 Go to https://studium-ds.herokuapp.com/docs for full documentation. All features of the API can be trialed from the FastAPI docs page.
 
 
