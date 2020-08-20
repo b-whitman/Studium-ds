@@ -28,7 +28,7 @@ def leitner_dates(row):
 
 def update_next_due(row):
     
-    comfort_dict = {1 : 0, 2 : 2, 3 : 4, 4 : 9, 5 : 14}
+    comfort_dict = {1 : -1, 2 : 2, 3 : 4, 4 : 9, 5 : 14}
     
     next_due = dt.now() + timedelta(days=comfort_dict[row['comfort_level']])
     row['next_due'] = next_due.strftime('%m-%d-%Y, %H:%M')
