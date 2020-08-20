@@ -75,7 +75,7 @@ async def wiki_search(word: str):
 
 
 # Create route to return gauge plot
-@app.post('/lietner_bar')
+@app.post('/leitner_bar')
 async def plot_gauge(comfort_level : list = []):
     """Takes a list of comfort levels as integers 
     and returns the lietner levels plot in plotly json object"""
