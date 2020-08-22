@@ -14,7 +14,6 @@ from pydantic import BaseModel
 
 from autogenerate_decks import autogenerate
 from comparative_metrics import *
-import gauge_plot
 from retrieve_definition import retrieve_definition
 from leitner import leitner_dates
 from viz_leitner import leitner_bar
