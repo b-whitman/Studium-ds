@@ -17,6 +17,7 @@ from comparative_metrics import *
 import gauge_plot
 from retrieve_definition import retrieve_definition
 from leitner import leitner_dates
+from viz_leitner import leitner_bar
 
 
 # Creating FastApi
@@ -74,23 +75,12 @@ async def wiki_search(word: str):
 
 
 # Create route to return gauge plot
-@app.post('/gauge')
-async def plot_gauge(request: Request, streaks: int):
-    """Return the streaks gauge plot in encoded base64 string"""
-    img_bytes = gauge_plot.gauge(streaks)
-    # return templates.TemplateResponse('gauge.png', {"request": request})
-    return img_bytes
-
-
-# Create route to delete gauge plot
-@app.delete('/delete_gauge')
-async def delete_gauge():
-    """deletes gauge.png file saved in server"""
-    try:
-        os.remove('gauge.png')
-        return 'File deleted'
-    except BaseException:
-        return "File has already been deleted"
+@app.post('/leitner_bar')
+async def plot_gauge(comfort_level : list = []):
+    """Takes a list of comfort levels as integers 
+    and returns the lietner levels plot in plotly json object"""
+    lietner_img = leitner_bar(comfort_level)
+    return lietner_img
 
 
 @app.get('/autogenerate_deck')
