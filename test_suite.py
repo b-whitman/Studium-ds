@@ -11,7 +11,7 @@ import numpy as np
 
 class TestComparativeMetrics(unittest.TestCase):
     def setUp(self):
-        self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220, 1583015820]],
+        self.test_df_1 = pd.DataFrame(data=[[1, 40, 1583015220000, 1583015820000]],
                                       columns=['id', 'total_looked_at', 'session_start', 'session_end'])
         self.test_df_2 = convert_to_datetime(self.test_df_1)
 
