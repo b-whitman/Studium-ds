@@ -33,21 +33,21 @@ class TestComparativeMetrics(unittest.TestCase):
         self.assertEqual(best_session_length(self.test_df_2), 10.0)
 
     def test_daily_cards_min_comparison(self):
-        self.assertEqual(len(daily_cards_min_comparison(self.test_df_2)), 2)
+        self.assertEqual(len(daily_cards_min_comparison(self.test_df_2)), 4)
         self.assertEqual(daily_cards_min_comparison(self.test_df_2)['daily_cards_min'], 0)
         self.assertEqual(daily_cards_min_comparison(self.test_df_2)['difference'], 100)
         self.assertEqual(daily_cards_min_comparison(self.test_df_2)['color_code'], '000000')
         self.assertEqual(daily_cards_min_comparison(self.test_df_2)['unicode'], u'\u003D')
 
     def test_weekly_per_min_comparison(self):
-        self.assertEqual(len(weekly_per_min_comparison(self.test_df_2)), 2)
+        self.assertEqual(len(weekly_per_min_comparison(self.test_df_2)), 4)
         self.assertEqual(weekly_per_min_comparison(self.test_df_2)['weekly_cards_min'], 0)
         self.assertEqual(weekly_per_min_comparison(self.test_df_2)['difference'], 100)
         self.assertEqual(weekly_per_min_comparison(self.test_df_2)['color_code'], '000000')
         self.assertEqual(weekly_per_min_comparison(self.test_df_2)['unicode'], u'\u003D')
 
     def test_monthly_per_min_comparison(self):
-        self.assertEqual(len(monthly_per_min_comparison(self.test_df_2)), 2)
+        self.assertEqual(len(monthly_per_min_comparison(self.test_df_2)), 4)
         self.assertEqual(monthly_per_min_comparison(self.test_df_2)['monthly_cards_min'], 0)
         self.assertEqual(monthly_per_min_comparison(self.test_df_2)['difference'], 100)
         self.assertEqual(monthly_per_min_comparison(self.test_df_2)['color_code'], '000000')
