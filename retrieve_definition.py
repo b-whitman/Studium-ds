@@ -69,6 +69,11 @@ def get_json_opensearch(term):
 
 
 def retrieve_definition(term, term_wrangled=False):
+    """
+    Given a term, returns the first 190 characters of the matching Wikipedia
+    page. If no term is found, returns a "Did you mean...?" prompt with three
+    terms that do have matching pages.
+    """
     if len(term) > 255:
         text = 'Sorry, that text is too long to search!'
 
