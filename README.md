@@ -1,94 +1,56 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
-# 1️⃣ Title of project goes here
-
-You can find the project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
-
-## 5️⃣ Contributors
-
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
-
-|                                       [Student 1](https://github.com/)                                        |                                       [Student 2](https://github.com/)                                        |                                       [Student 3](https://github.com/)                                        |                                       [Student 4](https://github.com/)                                        |                                       [Student 5](https://github.com/)                                        |
-| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
-|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
 
 
 
-🚫 5️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
+# Studium
 
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+You can find the project at [http://www.synapsapp.com/](http://www.synapsapp.com/).
 
-🚫 more info on using badges [here](https://github.com/badges/shields)
+## Contributors
+
+|                                       [Amer Mahyoub](https://github.com/ameralhomdy)                                        |                                       [Ben Whitman](https://github.com/b-whitman)                                        |                                       [Cai Nowicki](https://github.com/dunkelweizen)                                        |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+|                      [<img src="https://avatars0.githubusercontent.com/u/18502421?s=400&u=0968b250d7df526da558e489c8b6a3bcca492a0b&v=4" width = "200" />](https://github.com/ameralhomdy)                       |                      [<img src="https://ca.slack-edge.com/ESZCHB482-W012JQ0JDDZ-c45d031dd395-512" width = "200" />](https://github.com/b-whitman)                       |                      [<img src="https://avatars1.githubusercontent.com/u/53185634?s=400&v=4" width = "200" />](https://github.com/dunkelweizen)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
+|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ameralhomdy)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/b-whitman)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/dunkelweizen)             |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com//in/amermahyoub/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/benjamin-whitman-946a0a192/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/cai-nowicki-82749312/) |
+
+
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/ec33ec3ad4fd03a44fb0/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/pt-synaps-ds/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ec33ec3ad4fd03a44fb0/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/pt-synaps-ds/test_coverage)
+
 
 ## Project Overview
 
 
-1️⃣ [Trello Board](🚫add link to trello board here)
+ [Trello Board](https://trello.com/b/TIZq1yva/labspt11-studium)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+ [Product Canvas](https://www.notion.so/244664dd54b047b5803cbd5c735dfb31?v=766ef77c015042b3b7fbec64394693e9)
 
-🚫 Replace lorem ipsum with a description of your project
+A flashcard application for students studying life sciences. It's Quizlet meets Anki 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Data Science contribution to the project is a Heroku API with endpoints that will return auto-generated text for flashcards, a set of auto-generated cards for a deck on a specific term, dates for the next time to show the user a specific flashcard based on the Leitner spaced repetition system, or metrics/visualizations for the user's studying sessions.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-🚫  delete if front end is not applicable to your project
-
-1️⃣ [Deployed Front End](🚫add link to deployed app here)
+[Deployed Front End](https://studium-fe.herokuapp.com/)
 
 ### Tech Stack
-
-🚫 List all of the languages, frameworks, services, etc used here.
-
-### 2️⃣ Predictions
-
-🚫 Describe your models here
-
-### 2️⃣ Explanatory Variables
-
--   Explanatory Variable 1
--   Explanatory Variable 2
--   Explanatory Variable 3
--   Explanatory Variable 4
--   Explanatory Variable 5
+- Python
+- Wikipedia access through MediaWiki API
+- Heroku (both front-end and custom API)
+- FastAPI
 
 ### Data Sources
-🚫  Add to or delete souce links as needed for your project
 
 
--   [Source 1] (🚫add link to python notebook here)
--   [Source 2] (🚫add link to python notebook here)
--   [Source 3] (🚫add link to python notebook here)
--   [Source 4] (🚫add link to python notebook here)
--   [Source 5] (🚫add link to python notebook here)
+-   [MediaWiki API on Wikipedia.org] (https://en.wikipedia.org/w/api.php)
+-   [User Data from app] 
 
-### Python Notebooks
 
-🚫  Add to or delete python notebook links as needed for your project
+### How to connect to the web API
 
-[Python Notebook 1](🚫add link to python notebook here)
+You can connect to the DS web api by sending a GET or POST requests. 
+Go to https://studium-ds.herokuapp.com/docs for full documentation. All features of the API can be trialed from the FastAPI docs page.
 
-[Python Notebook 2](🚫add link to python notebook here)
 
-[Python Notebook 3](🚫add link to python notebook here)
-
-### 3️⃣ How to connect to the web API
-
-🚫 List directions on how to connect to the API here
-
-### 3️⃣ How to connect to the data API
-
-🚫 List directions on how to connect to the API here
 
 ## Contributing
 
@@ -128,7 +90,6 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/Studium-be) for details on the backend of our project.
 
-See [Front End Documentation](_link to your front end readme here_) for details on the front end of our project.
-
+See [Front End Documentation](https://github.com/Lambda-School-Labs/Studium-fe) for details on the front end of our project.
